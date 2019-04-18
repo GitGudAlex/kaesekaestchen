@@ -8,7 +8,11 @@ public class Player {
     String name;
     Color color;
 
-    private void gameOver (){
+    private void addPoints(){
+
+    };
+
+    private void decreasePoints (){
 
     };
 

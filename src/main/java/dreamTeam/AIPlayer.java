@@ -1,6 +1,6 @@
 package dreamTeam;
 
-public class AIPlayer {
+public class AIPlayer extends Player{
     int difficulty;
 
 }

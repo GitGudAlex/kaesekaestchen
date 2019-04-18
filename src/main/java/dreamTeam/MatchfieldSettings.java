@@ -1,15 +1,13 @@
 package dreamTeam;
 
-public class Settings {
+public class MatchfieldSettings {
 
     int fieldSize;
     int fieldShape;
-    int players;
+    int bonusfield;
+    int minusflied;
 
-    boolean bonusfield;
-    boolean minusflied;
     boolean fastMode;
-    boolean aiPlayerSet;
 
     private void generateMatchfield (int fieldSize, int fieldShape, boolean bonusfield, boolean minusflied, boolean fastMode){
     };

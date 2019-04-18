@@ -15,4 +15,8 @@ public class Line {
     private void setLine (){
 
     };
+
+    private void checkLine () {
+
+    };
 }
