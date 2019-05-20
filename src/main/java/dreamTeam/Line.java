@@ -5,8 +5,17 @@ public class Line {
     int xCoord;
     int yCoord;
     int ali;
+    //0=horizontal
+    //1=vertikal
 
     boolean state;
+
+    public Line(int xCoord, int yCoord, int ali) {
+        this.xCoord = xCoord;
+        this.yCoord = yCoord;
+        this.ali = ali;
+        this.state = false;
+    }
 
     private void generateLine (){
 
@@ -19,4 +28,12 @@ public class Line {
     private void checkLine () {
 
     };
+
+    public boolean isState() {
+        return state;
+    }
+
+    public void setState(boolean state) {
+        this.state = state;
+    }
 }

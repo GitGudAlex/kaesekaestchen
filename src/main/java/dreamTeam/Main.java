@@ -34,7 +34,7 @@ public class Main {
 
         playermanager.generatePlayer();
 
-        MatchfieldSettings matchfield = new MatchfieldSettings(3,5,3,1,true);
+        MatchfieldSettings matchfield = new MatchfieldSettings(3,5,true,false,true);
 
         matchfield.generateMatchfield();
     };
