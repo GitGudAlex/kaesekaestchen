@@ -5,7 +5,7 @@ import org.apache.logging.log4j.Logger;
 
 public class Main {
 
-    public static final Logger logger = LogManager.getLogger(App.class);
+    private static final Logger logger = LogManager.getLogger(App.class);
 
     public static void main(String[] args) {
 
@@ -20,17 +20,23 @@ public class Main {
     }
 
     private static void newGame (){
-        //if (AnzahlSpieler == 1) {aiPlayer = true;}
+        //ToDo if (AnzahlSpieler == 1) {aiPlayer = true;}
 
-        generatePlayers(4);
+        PlayerManager playermanager = new PlayerManager();
+        playermanager.setPlayers(4);
 
-        //Weiter-Button
 
-        //Namen einfügen
+        //ToDo Weiter-Button
 
-        //Weiter-Button
+        //ToDo Namen einfügen
 
-        generatePlayers();
+        //ToDO Weiter-Button
+
+        playermanager.generatePlayer();
+
+        MatchfieldSettings matchfield = new MatchfieldSettings(3,5,3,1,true);
+
+        matchfield.generateMatchfield();
     };
 
     private static void showInstruction (){
@@ -41,17 +47,4 @@ public class Main {
 
     };
 
-    private static void checkPoints(){
-
-    };
-
-    private static void generatePlayers(int players){
-        if (){
-            Player playerOne = new Player(name, color);
-        }else if (){
-            Player playerTwo = new Player(name, color);
-        }else if (){
-            Player playerThree = new Player(name, color);
-        }
-    };
 }

@@ -1,23 +1,32 @@
 package dreamTeam;
 
 
-/*
+import java.awt.*;
+import java.util.ArrayList;
+
 public class PlayerManager {
 
-    int players;
+    private int players;
 
-    boolean aiPlayerSet;
+    private boolean aiPlayerSet;
 
-    public PlayerManager(int players, boolean aiPlayerSet) {
-        this.players = players;
-        this.aiPlayerSet = aiPlayerSet;
-    }
+    private String[] playerName;
+    private Color[] playerColor;
 
-    private static void generatePlayer(){
+    private ArrayList<Player> playerList = new ArrayList<Player>();
 
+    void generatePlayer(){
+
+        playerName = new String[players];
+        playerColor = new Color[players];
+
+        for (int i = 1; i <= players ; i++) {
+            playerList.add(i, new Player(playerName[i], playerColor[i]));
+        }
     };
 
-    private void checkPoint(){
+    //Maximale Punktzahl
+    private void checkScore(){
 
     };
 
@@ -25,7 +34,7 @@ public class PlayerManager {
         return players;
     }
 
-    public void setPlayers(int inputPlayers) {
+    void setPlayers(int inputPlayers) {
         this.players = inputPlayers;
     }
 
