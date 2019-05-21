@@ -45,6 +45,8 @@ public class Main {
 
     private static void startGame (){
 
-    };
+    }
+
+    //ToDo überprüfe ob Rand oder Mittellinie
 
 }

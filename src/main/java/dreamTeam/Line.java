@@ -29,7 +29,7 @@ public class Line {
 
     };
 
-    public boolean isState() {
+    public boolean getState() {
         return state;
     }
 
