@@ -13,6 +13,7 @@ public class Main {
 
         if (start==1){
             newGame();
+            logger.info("Neues Spiel wird gestartet.");
         } else if (start==2) {
             showInstruction();
         }
