@@ -1,6 +1,8 @@
 package dreamTeam;
 
 import javafx.application.Application;
+import javafx.event.EventHandler;
+import javafx.event.Event;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -11,6 +13,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 
 public class GUI extends Application {
@@ -42,10 +46,6 @@ public class GUI extends Application {
         Scene scene = new Scene(pane,600,600);
 
         pane.setMinSize(600,600);
-
-        Button button = new Button();
-        Button button1 = new Button ();
-        Button b2 = new Button();
 
         ArrayList<Button> buttonList = new ArrayList();
         ArrayList<Button> buttonListHorizontal = new ArrayList();
@@ -85,13 +85,19 @@ public class GUI extends Application {
                 buttonList.add(indexVertical, new Button());
                 buttonList.get(indexVertical).setPrefSize(20, 40);
                 pane.add(buttonList.get(indexVertical), column + 2, i + 1);
+                indexVertical++;
             }
         }
 
+
+        buttonList.get(1).setOnAction(actionEvent -> buttonList.get(1).setVisible(false));
+
         primaryStage.setScene(scene);
         primaryStage.show();
-
     }
+
+
+
 
     private static MatchfieldSettings newGame (){
         //ToDo if (AnzahlSpieler == 1) {aiPlayer = true;}
