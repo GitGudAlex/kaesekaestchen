@@ -7,7 +7,7 @@ public class Main {
 
     private static final Logger logger = LogManager.getLogger(App.class);
 
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
 
         int start = 1; // 1=newGame 2=instructions
 
@@ -48,6 +48,6 @@ public class Main {
 
     }
 
-    //ToDo überprüfe ob Rand oder Mittellinie
+    //ToDo überprüfe ob Rand oder Mittellinie */
 
 }

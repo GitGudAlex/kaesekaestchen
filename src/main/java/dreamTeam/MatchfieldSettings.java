@@ -12,6 +12,10 @@ public class MatchfieldSettings {
 
     private int fieldSize;
 
+    public int getFieldSize() {
+        return fieldSize;
+    }
+
     private int fieldShape;
 
     private boolean bonusfield;
