@@ -31,71 +31,21 @@ public class GUI extends Application {
         int start = 1; // 1=newGame 2=instructions
         MatchfieldSettings matchfield;
 
-        if (start ==2 ){
+        if (start == 2) {
             showInstruction();
         }
-        if (start==1){
+        if (start == 1) {
             matchfield = newGame();
             logger.info("Neues Spiel wird gestartet.");
         } else {
-            matchfield = new MatchfieldSettings(0,0, false, false, false);
+            matchfield = new MatchfieldSettings(0, 0, false, false, false);
         }
-
-        GridPane pane = new GridPane();
-
-        Scene scene = new Scene(pane,600,600);
-
-        pane.setMinSize(600,600);
-
-        ArrayList<Button> buttonList = new ArrayList();
-        ArrayList<Button> buttonListHorizontal = new ArrayList();
-        ArrayList<Button> buttonField = new ArrayList<>();
-
-
-        int indexHorizontal = 0;
-        int indexVertical = 0;
-        int indexField = 0;
-        int column = 0;
-        for (int i = 0; i < matchfield.getFieldSize(); i+=2) {
-            for (int j = 0; j < matchfield.getFieldSize()-1; j+= 2) {
-                Label label = new Label();
-                pane.add(label, j, i);
-                label.setPrefSize(10,10);
-                buttonListHorizontal.add(indexHorizontal, new Button());
-                buttonListHorizontal.get(indexHorizontal).setPrefSize(40,10);
-                pane.add(buttonListHorizontal.get(indexHorizontal), j+1, i);
-                indexHorizontal ++;
-                column = j;
-            }
-            Label l = new Label();
-            pane.add(l, column+2, i);
-            l.setPrefSize(10,10);
-            if (i<matchfield.getFieldSize()-1) {
-                for (int j = 0; j < matchfield.getFieldSize()-1; j += 2) {
-                    buttonList.add(indexVertical, new Button());
-                    buttonList.get(indexVertical).setPrefSize(20, 40);
-                    pane.add(buttonList.get(indexVertical), j, i + 1);
-                    buttonField.add(indexField, new Button());
-                    buttonField.get(indexField).setPrefSize(40, 40);
-                    pane.add(buttonField.get(indexField), j + 1, i + 1);
-                    indexVertical++;
-                    indexField++;
-                    column = j;
-                }
-                buttonList.add(indexVertical, new Button());
-                buttonList.get(indexVertical).setPrefSize(20, 40);
-                pane.add(buttonList.get(indexVertical), column + 2, i + 1);
-                indexVertical++;
-            }
-        }
-
-
-        buttonList.get(1).setOnAction(actionEvent -> buttonList.get(1).setVisible(false));
-
-        primaryStage.setScene(scene);
+        primaryStage.setScene(playingScene(matchfield));
         primaryStage.show();
-    }
 
+
+
+    }
 
 
 
@@ -129,6 +79,99 @@ public class GUI extends Application {
 
     }
 
+    private static void firstScene(){
+
+    }
+
+    private static void secondScene(){
+
+    }
+
+    private static void thirdScene(){
+
+    }
+
+    private static Scene playingScene(MatchfieldSettings matchfield){
+            /*
+            mock data
+             */
+            String [] n = {"p1", "p2"};
+            Color [] c = {Color.blue, Color.red};
+            PlayerManager p = new PlayerManager(2,false,n,c);
+
+            GridPane pane = new GridPane();
+
+            Scene scene = new Scene(pane,600,600);
+
+            pane.setMinSize(600,600);
+
+            ArrayList<Button> buttonList = new ArrayList();
+            ArrayList<Button> buttonListHorizontal = new ArrayList();
+            ArrayList<Button> buttonField = new ArrayList<>();
+
+
+            int indexHorizontal = 0;
+            int indexVertical = 0;
+            int indexField = 0;
+            int column = 0;
+            for (int i = 0; i < matchfield.getFieldSize(); i+=2) {
+                for (int j = 0; j < matchfield.getFieldSize()-1; j+= 2) {
+                    Label label = new Label();
+                    pane.add(label, j, i);
+                    label.setPrefSize(10,10);
+                    buttonListHorizontal.add(indexHorizontal, new Button());
+                    buttonListHorizontal.get(indexHorizontal).setPrefSize(40,10);
+                    pane.add(buttonListHorizontal.get(indexHorizontal), j+1, i);
+                    indexHorizontal ++;
+                    column = j;
+                }
+                Label l = new Label();
+                pane.add(l, column+2, i);
+                l.setPrefSize(10,10);
+                if (i<matchfield.getFieldSize()-1) {
+                    for (int j = 0; j < matchfield.getFieldSize()-1; j += 2) {
+                        buttonList.add(indexVertical, new Button());
+                        buttonList.get(indexVertical).setPrefSize(20, 40);
+                        pane.add(buttonList.get(indexVertical), j, i + 1);
+                        buttonField.add(indexField, new Button());
+                        buttonField.get(indexField).setPrefSize(40, 40);
+                        pane.add(buttonField.get(indexField), j + 1, i + 1);
+                        indexVertical++;
+                        indexField++;
+                        column = j;
+                    }
+                    buttonList.add(indexVertical, new Button());
+                    buttonList.get(indexVertical).setPrefSize(20, 40);
+                    pane.add(buttonList.get(indexVertical), column + 2, i + 1);
+                    indexVertical++;
+                }
+            }
+
+        for (int i = 0; i < buttonList.size() ; i++) {
+            Button b = buttonList.get(i);
+            b.setOnAction(actionEvent -> {
+                String newColor = "#" + Integer.toHexString(p.getCurrentPlayer().getColor().getRGB()).substring(2);
+                logger.debug(newColor);
+                b.setStyle("-fx-background-color: "+newColor);
+                p.nextPlayer();
+            });
+
+        }for (int i = 0; i < buttonListHorizontal.size() ; i++) {
+            Button b = buttonListHorizontal.get(i);
+            b.setOnAction(actionEvent -> {
+                String newColor = "#" + Integer.toHexString(p.getCurrentPlayer().getColor().getRGB()).substring(2);
+                logger.debug(newColor);
+                b.setStyle("-fx-background-color: "+newColor);
+                p.nextPlayer();
+            });
+        }
+
+            return scene;
+
+        }
+
+
+    }
     //ToDo überprüfe ob Rand oder Mittellinie
 
-}
+

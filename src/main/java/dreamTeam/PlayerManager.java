@@ -1,34 +1,48 @@
 package dreamTeam;
 
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.awt.*;
 import java.util.ArrayList;
 
 public class PlayerManager {
+    private static final Logger logger = LogManager.getLogger(App.class);
 
     private int players;
 
     private boolean aiPlayerSet;
 
-    private String[] playerName;
-    private Color[] playerColor;
-
+    private int playerPlaying;
     private ArrayList<Player> playerList = new ArrayList<Player>();
 
-    void generatePlayer(){
-
-        playerName = new String[players];
-        playerColor = new Color[players];
-
-        for (int i = 1; i <= players ; i++) {
-            playerList.add(i, new Player(playerName[i], playerColor[i]));
+    public PlayerManager(int players, boolean aiPlayerSet, String[] playerName, Color[] playerColor) {
+        this.players = players;
+        this.aiPlayerSet = aiPlayerSet;
+        for (int i = 0; i < players; i++) {
+            playerList.add(new Player(playerName[i], playerColor[i]));
         }
-    };
+        playerPlaying = 0;
+    }
 
     //Maximale Punktzahl
     private void checkScore(){
 
     };
+
+    public void nextPlayer(){
+
+        playerPlaying = (playerPlaying+1) % players;
+        logger.debug(playerPlaying);
+
+    }
+
+    public Player getCurrentPlayer (){
+        logger.debug(playerList.get(playerPlaying).getName());
+        return playerList.get(playerPlaying);
+
+    }
 
     public int getPlayers() {
         return players;

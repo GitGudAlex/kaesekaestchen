@@ -4,9 +4,9 @@ import java.awt.*;
 
 class Player {
 
-    int score;
-    String name;
-    Color color;
+    private int score;
+    private String name;
+    private Color color;
 
 
     Player(String name, Color color) {
@@ -31,5 +31,11 @@ class Player {
 
     };
 
+    public Color getColor() {
+        return color;
+    }
 
+    public String getName() {
+        return name;
+    }
 }
