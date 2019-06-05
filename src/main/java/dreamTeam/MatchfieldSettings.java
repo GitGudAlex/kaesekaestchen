@@ -23,9 +23,9 @@ public class MatchfieldSettings {
 
     private boolean fastMode;
 
-    private ArrayList<Line> lineListHorizontal;
-    private ArrayList<Line> lineListVertical;
-    private ArrayList<IField> fieldList;
+    private ArrayList<Line> lineListHorizontal = new ArrayList<>();
+    private ArrayList<Line> lineListVertical = new ArrayList<>();
+    private ArrayList<IField> fieldList = new ArrayList<>();
 
     MatchfieldSettings(int fieldSize, int fieldShape, boolean bonusfield, boolean minusfield, boolean fastMode) {
         this.fieldSize = (fieldSize*2)+1;
@@ -36,22 +36,24 @@ public class MatchfieldSettings {
     }
 
     void generateMatchfield(){
-        int indexLineHorizontal = 1;
-        int indexLineVertical = 1;
-        int indexField=1;
 
-        for (int x = 1; x < this.fieldSize; x+=2) {
-            for (int y = 0; y <= this.fieldSize ; y+=2) {
-                lineListHorizontal.add(indexLineHorizontal,new Line(x, y, 0));
+        int indexLineHorizontal = 0;
+        int indexLineVertical = 0;
+        int indexField=0;
+
+        for (int x = 0; x < this.fieldSize; x+=2) {
+            for (int y = 1; y <= this.fieldSize ; y+=2) {
+                lineListHorizontal.add(indexLineHorizontal,new Line(x, y, 1));
+                logger.debug(lineListHorizontal.get(indexLineHorizontal));
                 indexLineHorizontal++;
                 logger.debug("Horizontal Line created. Index: " + indexLineHorizontal + " xCoord: " + x + " yCoord: " + y);
             }
         }
         logger.info("Horizontal Lines count: " + indexLineHorizontal);
 
-        for (int x = 0; x <= this.fieldSize ; x+=2) {
-            for (int y = 1; y < this.fieldSize ; y+=2) {
-                lineListVertical.add(indexLineVertical, new Line (x,y,1));
+        for (int x = 1; x <= this.fieldSize ; x+=2) {
+            for (int y = 0; y < this.fieldSize ; y+=2) {
+                lineListVertical.add(indexLineVertical, new Line (x,y,0));
                 indexLineVertical++;
                 logger.debug("Vertical Line created. Index: " + indexLineVertical + " xCoord: " + x + " yCoord: " + y);
             }
@@ -121,7 +123,7 @@ public class MatchfieldSettings {
         return fieldList.get(indexLine);
     }
 
-    protected IField checkFieldSide (int indexLine, int side){
+    protected int checkFieldSide (int indexLine, int side){
         logger.debug("Check FieldSide");
         int rest = indexLine%fieldSize;
         logger.debug("FieldSide remainder: " + rest);
@@ -130,6 +132,19 @@ public class MatchfieldSettings {
         int factor = n/fieldSize;
         logger.debug("FieldSide factor: " + factor);
         logger.debug("FieldSide " + side + " : " + fieldList);
-        return fieldList.get(n+rest-(factor*1)+side);
+        return n+rest-(factor*1)+side;
     }
+
+    public ArrayList<Line> getLineListHorizontal() {
+        return lineListHorizontal;
+    }
+
+    public ArrayList<Line> getLineListVertical() {
+        return lineListVertical;
+    }
+
+    public ArrayList<IField> getFieldList() {
+        return fieldList;
+    }
+
 }

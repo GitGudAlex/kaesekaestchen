@@ -18,4 +18,5 @@ public class Minusfield extends Field{
     public void generateField() {
         super.generateField();
     }
+
 }

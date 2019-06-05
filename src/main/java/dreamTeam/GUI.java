@@ -95,6 +95,7 @@ public class GUI extends Application {
             /*
             mock data
              */
+
             String [] n = {"p1", "p2"};
             Color [] c = {Color.blue, Color.red};
             PlayerManager p = new PlayerManager(2,false,n,c);
@@ -110,6 +111,7 @@ public class GUI extends Application {
             ArrayList<Button> buttonField = new ArrayList<>();
 
 
+        matchfield.generateMatchfield();
             int indexHorizontal = 0;
             int indexVertical = 0;
             int indexField = 0;
@@ -148,30 +150,58 @@ public class GUI extends Application {
             }
 
         for (int i = 0; i < buttonList.size() ; i++) {
-            Button b = buttonList.get(i);
-            b.setOnAction(actionEvent -> {
-                String newColor = "#" + Integer.toHexString(p.getCurrentPlayer().getColor().getRGB()).substring(2);
-                logger.debug(newColor);
-                b.setStyle("-fx-background-color: "+newColor);
-                p.nextPlayer();
-            });
+            clickChangeColor(buttonField,buttonList, i, p, matchfield, 0); //0: vertical buttons
 
         }for (int i = 0; i < buttonListHorizontal.size() ; i++) {
-            Button b = buttonListHorizontal.get(i);
+            clickChangeColor(buttonField, buttonListHorizontal, i, p, matchfield, 1); //1: horizontal buttons
+        }
+            return scene;
+        }
+
+        private static void clickChangeColor(ArrayList <Button> buttonField, ArrayList <Button> buttonList, int i, PlayerManager p, MatchfieldSettings m, int index){
+            Button b= buttonList.get(i);
             b.setOnAction(actionEvent -> {
+                if(index == 0 && m.getLineListVertical().get(i).getState()==false || index == 1 && m.getLineListHorizontal().get(i).getState()==false){
                 String newColor = "#" + Integer.toHexString(p.getCurrentPlayer().getColor().getRGB()).substring(2);
                 logger.debug(newColor);
                 b.setStyle("-fx-background-color: "+newColor);
-                p.nextPlayer();
-            });
-        }
+                if (index == 0){
+                    m.getLineListVertical().get(i).setState(true);
 
-            return scene;
+                } else if (index == 1){
+                    m.getLineListHorizontal().get(i).setState(true);
+                }
+                checkFields(buttonField,m,i,index, p);
+                p.nextPlayer();}
+            });}
 
-        }
+        private static void checkFields(ArrayList<Button> buttonField, MatchfieldSettings m, int index, int ali, PlayerManager p){
+        IField field;
+            if (ali==0){
+                if(m.getLineListVertical().get(index).getyCoord()==0){
+                    int indexField = m.checkFieldSide(index,1);
+                    field = m.getFieldList().get(indexField);
+                    field.checkCompleted();
+                    Button button = buttonField.get(index);
+                    logger.debug(field.isState());
+                    field.setState(true);
+                    if(field.isState()){
+                        button.setOnAction(actionEvent -> {
+                            String newColor = "#" + Integer.toHexString(p.getCurrentPlayer().getColor().getRGB()).substring(2);
+                            logger.debug(newColor);
+                            button.setStyle("-fx-background-color: " + newColor);
+                    });
+                    } else {
+
+                        }
+                    }
+                }
+            }
+            }
 
 
-    }
+
+
     //ToDo überprüfe ob Rand oder Mittellinie
 
 

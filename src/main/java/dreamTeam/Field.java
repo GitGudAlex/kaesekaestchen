@@ -37,4 +37,11 @@ public class Field implements IField{
         
     }
 
+    public void setState(boolean state) {
+        this.state = state;
+    }
+
+    public boolean isState() {
+        return state;
+    }
 }
