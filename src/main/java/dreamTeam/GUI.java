@@ -1,20 +1,15 @@
 package dreamTeam;
 
 import javafx.application.Application;
-import javafx.event.EventHandler;
-import javafx.event.Event;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 
 public class GUI extends Application {
@@ -102,9 +97,9 @@ public class GUI extends Application {
 
             GridPane pane = new GridPane();
 
-            Scene scene = new Scene(pane,600,600);
+            Scene scene = new Scene(pane,300,300);
 
-            pane.setMinSize(600,600);
+            pane.setMinSize(300,300);
 
             ArrayList<Button> buttonList = new ArrayList();
             ArrayList<Button> buttonListHorizontal = new ArrayList();
@@ -116,8 +111,8 @@ public class GUI extends Application {
             int indexVertical = 0;
             int indexField = 0;
             int column = 0;
-            for (int i = 0; i < matchfield.getFieldSize(); i+=2) {
-                for (int j = 0; j < matchfield.getFieldSize()-1; j+= 2) {
+            for (int i = 0; i < matchfield.getFieldSizeGUI(); i+=2) {
+                for (int j = 0; j < matchfield.getFieldSizeGUI()-1; j+= 2) {
                     Label label = new Label();
                     pane.add(label, j, i);
                     label.setPrefSize(10,10);
@@ -130,8 +125,8 @@ public class GUI extends Application {
                 Label l = new Label();
                 pane.add(l, column+2, i);
                 l.setPrefSize(10,10);
-                if (i<matchfield.getFieldSize()-1) {
-                    for (int j = 0; j < matchfield.getFieldSize()-1; j += 2) {
+                if (i<matchfield.getFieldSizeGUI()-1) {
+                    for (int j = 0; j < matchfield.getFieldSizeGUI()-1; j += 2) {
                         buttonList.add(indexVertical, new Button());
                         buttonList.get(indexVertical).setPrefSize(20, 40);
                         pane.add(buttonList.get(indexVertical), j, i + 1);
@@ -158,20 +153,23 @@ public class GUI extends Application {
             return scene;
         }
 
-        private static void clickChangeColor(ArrayList <Button> buttonField, ArrayList <Button> buttonList, int i, PlayerManager p, MatchfieldSettings m, int index){
+        private static void clickChangeColor(ArrayList <Button> buttonField, ArrayList <Button> buttonList, int i, PlayerManager p, MatchfieldSettings m, int ali){
             Button b= buttonList.get(i);
             b.setOnAction(actionEvent -> {
-                if(index == 0 && m.getLineListVertical().get(i).getState()==false || index == 1 && m.getLineListHorizontal().get(i).getState()==false){
+                if(ali == 0 && m.getLineListVertical().get(i).getState()==false || ali == 1 && m.getLineListHorizontal().get(i).getState()==false){
                 String newColor = "#" + Integer.toHexString(p.getCurrentPlayer().getColor().getRGB()).substring(2);
                 logger.debug(newColor);
                 b.setStyle("-fx-background-color: "+newColor);
-                if (index == 0){
+                if (ali == 0){
                     m.getLineListVertical().get(i).setState(true);
+                    logger.debug("Line state:"+m.getLineListVertical().get(i).getState());
+                    logger.debug(("x-Coord: " + m.getLineListVertical().get(i).getxCoord() + "y-Coord: " + m.getLineListVertical().get(i).getyCoord()));
 
-                } else if (index == 1){
+                } else if (ali == 1){
                     m.getLineListHorizontal().get(i).setState(true);
+                    logger.debug(("x-Coord: " + m.getLineListHorizontal().get(i).getxCoord() + "y-Coord: " + m.getLineListHorizontal().get(i).getyCoord()));
                 }
-                checkFields(buttonField,m,i,index, p);
+                checkFields(buttonField,m,i,ali, p);
                 p.nextPlayer();}
             });}
 
@@ -182,15 +180,12 @@ public class GUI extends Application {
                     int indexField = m.checkFieldSide(index,1);
                     field = m.getFieldList().get(indexField);
                     field.checkCompleted();
-                    Button button = buttonField.get(index);
-                    logger.debug(field.isState());
-                    field.setState(true);
+                    Button button = buttonField.get(indexField);
+                    logger.debug("fieldState: " + field.isState());
                     if(field.isState()){
-                        button.setOnAction(actionEvent -> {
                             String newColor = "#" + Integer.toHexString(p.getCurrentPlayer().getColor().getRGB()).substring(2);
                             logger.debug(newColor);
                             button.setStyle("-fx-background-color: " + newColor);
-                    });
                     } else {
 
                         }
