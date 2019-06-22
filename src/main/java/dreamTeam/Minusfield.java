@@ -2,8 +2,8 @@ package dreamTeam;
 
 public class Minusfield extends Field{
 
-    public Minusfield(int xCoord, int yCoord, Line leftLine, Line topLine, Line rightLine, Line bottomLine) {
-        super(xCoord, yCoord, leftLine, topLine, rightLine, bottomLine);
+    public Minusfield(int xCoord, int yCoord, int fieldIndex) {
+        super(xCoord, yCoord, fieldIndex);
     }
 
     public void setField(){
