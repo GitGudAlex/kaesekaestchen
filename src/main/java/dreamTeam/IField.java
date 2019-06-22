@@ -8,5 +8,11 @@ public interface IField {
 
     boolean isState();
 
+    boolean isCompleted();
+
     void setState(boolean state);
+
+    void calculateLines();
+
+    void setMatchfield(MatchfieldSettings matchfield);
 }

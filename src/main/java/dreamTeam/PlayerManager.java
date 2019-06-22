@@ -34,7 +34,6 @@ public class PlayerManager {
     public void nextPlayer(){
 
         playerPlaying = (playerPlaying+1) % players;
-        logger.debug(playerPlaying);
 
     }
 

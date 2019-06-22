@@ -13,6 +13,7 @@ public class Field implements IField{
     private int yCoord;
 
     private boolean state;
+    private boolean completed;
 
     private Color colorField = Color.gray;
 
@@ -29,10 +30,6 @@ public class Field implements IField{
         this.xCoord = xCoord;
         this.yCoord = yCoord;
         this.indexField = indexField;
-        this.leftLine = leftLine;
-        this.topLine = topLine;
-        this.rightLine = rightLine;
-        this.bottomLine = bottomLine;
         this.state = false;
     }
 
@@ -41,14 +38,11 @@ public class Field implements IField{
     };
 
     public void checkCompleted () {
-        logger.debug(("checkCompleted"));
-        logger.debug("leftLine: " + leftLine.getxCoord() + leftLine.getyCoord() + leftLine.getState());
-        logger.debug("rightLine: " + rightLine.getxCoord() + rightLine.getyCoord() + rightLine.getState());
-        logger.debug("topLine: " + topLine.getxCoord() + topLine.getyCoord() + topLine.getState());
-        logger.debug("bottomLine: " + bottomLine.getxCoord() + bottomLine.getyCoord() + bottomLine.getState());
+        logger.debug("checkCompleted");
         if (this.leftLine.getState()&&this.topLine.getState()&&this.rightLine.getState()&&this.bottomLine.getState()){
-            this.state = true;
+            this.completed = true;
         }
+        logger.debug("Field: " + indexField + " Completed: " + this.completed );
         
     }
 
@@ -60,11 +54,20 @@ public class Field implements IField{
         return state;
     }
 
-    public void setMatchfield (MatchfieldSettings matchfield){
-        this.matchfield = matchfield;
+    public boolean isCompleted() {
+        return completed;
     }
 
-    private void calucualteLines (){
+    public void setCompleted(boolean completed) {
+        this.completed = completed;
+    }
+
+    public void setMatchfield (MatchfieldSettings matchfielda){
+        matchfield = matchfielda;
+    }
+
+    public void calculateLines (){
+        logger.debug("Field: " + indexField);
         this.bottomLine=calculateLineBottom(this.indexField);
         this.leftLine=calculateLineSide(this.indexField, 0);
         this.rightLine=calculateLineSide(this.indexField, 1);
@@ -72,24 +75,24 @@ public class Field implements IField{
     }
 
     protected Line calculateLineSide (int indexField, int side) { // left = 0, right = 1
-        logger.debug("calculateLineSide");
+        //logger.debug("calculateLineSide");
         int rest = indexField% matchfield.getFieldSize();
-        logger.debug("Remainder: " + rest);
+        //logger.debug("Remainder: " + rest);
         int n = indexField-rest;
-        logger.debug("n: " + n);
+       // logger.debug("n: " + n);
         int factor = n/ matchfield.getFieldSize();
-        logger.debug("Factor: " + factor);
-        logger.debug("Vertical " + side + " : " + matchfield.getLineListVertical());
+        //logger.debug("Factor: " + factor);
+        logger.debug("LineSide " + side + " : " +(n+(factor*1)+rest+side));
         return matchfield.getLineListVertical().get(n+(factor*1)+rest+side);
     }
 
     protected Line calculateLineTop (int indexField){
-        logger.debug("LineTop: " + matchfield.getLineListHorizontal());
+        logger.debug("LineTop: " + indexField);
         return matchfield.getLineListHorizontal().get(indexField);
     }
 
     protected Line calculateLineBottom(int indexField){
-        logger.debug("LineBottom: " + matchfield.getLineListHorizontal());
+        logger.debug("LineBottom: " + (indexField+matchfield.getFieldSize()));
         return matchfield.getLineListHorizontal().get(indexField+ matchfield.getFieldSize());
     }
 }

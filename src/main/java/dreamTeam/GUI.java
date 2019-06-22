@@ -159,6 +159,11 @@ public class GUI extends Application {
             }
         }
 
+        for (int i = 0; i < matchfield.getFieldSize()*matchfield.getFieldSize(); i++) {
+            matchfield.getFieldList().get(i).setMatchfield(matchfield);
+            matchfield.getFieldList().get(i).calculateLines();
+        }
+
         for (int i = 0; i < buttonList.size(); i++) {
             clickChangeColor(buttonField, buttonList, i, p, matchfield, 0); //0: vertical buttons
 
@@ -169,53 +174,38 @@ public class GUI extends Application {
         return scene;
     }
 
-    private static void clickChangeColor(ArrayList<Button> buttonField, ArrayList<Button> buttonList, int i, PlayerManager p, MatchfieldSettings m, int ali) {
-        Button b = buttonList.get(i);
+    private static void clickChangeColor(ArrayList<Button> buttonField, ArrayList<Button> buttonList, int indexLine, PlayerManager p, MatchfieldSettings matchfield, int ali) {
+        Button b = buttonList.get(indexLine);
         b.setOnAction(actionEvent -> {
-            if (ali == 0 && m.getLineListVertical().get(i).getState() == false || ali == 1 && m.getLineListHorizontal().get(i).getState() == false) {
+            if (ali == 0 && !matchfield.getLineListVertical().get(indexLine).getState() || ali == 1 && !matchfield.getLineListHorizontal().get(indexLine).getState()) {
                 String newColor = "#" + Integer.toHexString(p.getCurrentPlayer().getColor().getRGB()).substring(2);
                 logger.debug(newColor);
                 b.setStyle("-fx-background-color: " + newColor);
                 if (ali == 0) {
-                    m.getLineListVertical().get(i).setState(true);
-                    logger.debug("Line state:" + m.getLineListVertical().get(i).getState());
-                    logger.debug(("x-Coord: " + m.getLineListVertical().get(i).getxCoord() + "y-Coord: " + m.getLineListVertical().get(i).getyCoord()));
+                    matchfield.getLineListVertical().get(indexLine).setState(true);
+                    logger.debug("Line pressed vertical: " + indexLine);
 
                 } else if (ali == 1) {
-                    m.getLineListHorizontal().get(i).setState(true);
-                    logger.debug(("x-Coord: " + m.getLineListHorizontal().get(i).getxCoord() + "y-Coord: " + m.getLineListHorizontal().get(i).getyCoord()));
-                    logger.debug("IndexLine: " + i);
+                    matchfield.getLineListHorizontal().get(indexLine).setState(true);
+                    logger.debug("Line pressed horizontal: " + indexLine);
                 }
-                checkFields(buttonField, m, i, ali, p);
+
+                for(int k=0 ; k < matchfield.checkFields(indexLine, ali).length; k++){
+                    matchfield.getFieldList().get(matchfield.checkFields(indexLine, ali)[k]).checkCompleted();
+                }
+
+                for (int j = 0; j < (matchfield.getFieldSize()*matchfield.getFieldSize()); j++) {
+                    if(matchfield.getFieldList().get(j).isCompleted()&&!matchfield.getFieldList().get(j).isState()){
+                        buttonField.get(j).setStyle("-fx-background-color: " + newColor);
+                        matchfield.getFieldList().get(j).setState(true);
+                    }
+                }
                 p.nextPlayer();
             }
         });
     }
 
-    private static void checkFields(ArrayList<Button> buttonField, MatchfieldSettings m, int index, int ali, PlayerManager p) {
-        IField field;
-            if (ali == 0 && m.getLineListVertical().get(index).getyCoord() == 0) {
-                int indexField = m.checkFieldSide(index, 1);
-                field = m.getFieldList().get(indexField);
-                field.checkCompleted();
-                Button button = buttonField.get(indexField);
-                logger.debug("fieldState: " + field.isState());
-                if (field.isState()) {
-                    String newColor = "#" + Integer.toHexString(p.getCurrentPlayer().getColor().getRGB()).substring(2);
-                    logger.debug(newColor);
-                    button.setStyle("-fx-background-color: " + newColor);
-            }
-        } else if (ali == 1 && m.getLineListHorizontal().get(index).getxCoord() == 0) {
-                field = m.getFieldList().get(index);
-                field.checkCompleted();
-                Button button = buttonField.get(index);
-                if (field.isState()) {
-                    String newColor = "#" + Integer.toHexString(p.getCurrentPlayer().getColor().getRGB()).substring(2);
-                    logger.debug(newColor);
-                    button.setStyle("-fx-background-color: " + newColor);
-            }
-        }
-    }
+
 }
 
 

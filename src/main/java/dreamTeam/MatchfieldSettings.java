@@ -72,31 +72,55 @@ public class MatchfieldSettings {
 
     }
 
+    //ali 0 = vertical, 1 = horizontal
 
+    public int[] checkFields(int indexLine, int ali){
+        logger.debug("checkField, indexLine: " + indexLine);
+        int[] i = new int[1];
+        int[] j = new int[2];
 
-    protected IField checkFieldTop (int indexLine){
-        logger.debug("Check current FieldTop: " + fieldList);
-        return fieldList.get(indexLine- fieldSize);
+        if (ali == 0){
+            if(indexLine%(fieldSize + 1) == 0){
+                i[0]=checkFieldSide(indexLine, 1);
+                return i;
+            } else if (indexLine%(fieldSize + 1) == fieldSize){
+                i[0]=checkFieldSide(indexLine, 0);
+                return i;
+            } else{
+                j[0]=checkFieldSide(indexLine,0);
+                j[1]=checkFieldSide(indexLine, 1);
+            }
+        }else if(ali == 1){
+            if(indexLine < fieldSize){
+                i[0]=checkFieldBottom(indexLine);
+                return i;
+            }else if(indexLine >= (fieldSize*fieldSize)){
+                i[0]=checkFieldTop(indexLine);
+                return i;
+            } else{
+                j[0]=checkFieldTop(indexLine);
+                j[1]=checkFieldBottom(indexLine);
+
+            }
+        }
+        return j;
+    }
+
+    protected int checkFieldTop (int indexLine){
+        logger.debug("Check FieldTop: " + (indexLine-fieldSize));
+        return indexLine - fieldSize;
     }
 
     protected int checkFieldBottom (int indexLine){
-        logger.debug("Check current FieldBottom: " + fieldList);
+        logger.debug("Check FieldBottom: " + indexLine);
         return indexLine;
     }
 
     protected int checkFieldSide (int indexLine, int side){
-        logger.debug("Check FieldSide");
-        logger.debug("FieldSize: " + fieldSize + " ; indexLine: " + indexLine);
-        int rest = indexLine% fieldSize;
-        logger.debug("FieldSide remainder: " + rest);
-        int n = indexLine-rest;
-        logger.debug("n: " + n);
-        int factor = n/ fieldSize;
-        logger.debug("FieldSide factor: " + factor);
-        logger.debug("FieldSide " + side + " : " + fieldList);
-        int test = n+rest-factor+side-factor;
-        logger.debug("Field: " +test);
-        return n+rest-factor+side-1;
+        logger.debug("Check FieldSide " + side + ":");
+        int row = (indexLine/(fieldSize+1))+1;
+        logger.debug("Row: "+row);
+        return indexLine-row+side;
     }
 
     public ArrayList<Line> getLineListHorizontal() {
