@@ -14,5 +14,7 @@ public interface IField {
 
     void calculateLines();
 
+    String getType();
+
     void setMatchfield(MatchfieldSettings matchfield);
 }

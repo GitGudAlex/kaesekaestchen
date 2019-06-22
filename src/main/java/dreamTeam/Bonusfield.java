@@ -6,14 +6,10 @@ public class Bonusfield extends Field {
         super(xCoord, yCoord, fieldIndex);
     }
 
-    public void checkCompleted(){
-
+    @Override
+    public String getType() {
+        return "bonus";
     }
-
-    public void setField(){
-
-    }
-
     @Override
     public void generateField() {
         super.generateField();

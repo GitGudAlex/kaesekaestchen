@@ -43,8 +43,8 @@ public class PlayerManager {
 
     }
 
-    public int getPlayers() {
-        return players;
+    public ArrayList<Player> getPlayers() {
+        return playerList;
     }
 
     void setPlayers(int inputPlayers) {

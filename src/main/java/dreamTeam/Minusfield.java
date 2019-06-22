@@ -6,12 +6,9 @@ public class Minusfield extends Field{
         super(xCoord, yCoord, fieldIndex);
     }
 
-    public void setField(){
-
-    }
-
-    public void checkCompleted(){
-
+    @Override
+    public String getType() {
+        return "minus";
     }
 
     @Override

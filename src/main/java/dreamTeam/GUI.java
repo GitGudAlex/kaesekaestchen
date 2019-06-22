@@ -1,6 +1,7 @@
 package dreamTeam;
 
 import javafx.application.Application;
+import javafx.css.Match;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -116,6 +117,7 @@ public class GUI extends Application {
         FieldFactory factory = new FieldFactory();
 
         int column = 0;
+        // create matchfield
         for (int i = 0; i < matchfield.getFieldSizeGUI(); i += 2) {
             for (int j = 0; j < matchfield.getFieldSizeGUI() - 1; j += 2) {
                 Label label = new Label();
@@ -145,6 +147,7 @@ public class GUI extends Application {
                     buttonField.get(indexField).setPrefSize(40, 40);
                     pane.add(buttonField.get(indexField), j + 1, i + 1);
                     matchfield.getFieldList().add(indexField, factory.generateField(j+1,i+1, indexField,matchfield.randomFieldType()));
+                    logger.debug("field index: "+indexField);
                     indexVertical++;
                     indexField++;
                     column = j;
@@ -159,6 +162,21 @@ public class GUI extends Application {
             }
         }
 
+        //create scoreboard
+        Label labele = new Label();
+        labele.setPrefSize(20,20);
+        Label labelp1 = new Label("Player 1: ");
+        Label labelp2 = new Label("Player 2: ");
+        Label pointLabelp1 = new Label("0");
+        Label pointLabelp2 = new Label("0");
+        pane.add(labele, matchfield.getFieldSizeGUI(), 0);
+        pane.add(labelp1, matchfield.getFieldSizeGUI()+1, 0);
+        pane.add(pointLabelp1, matchfield.getFieldSizeGUI()+2, 0);
+        p.getPlayers().get(0).setLabel(pointLabelp1);
+        pane.add(labelp2, matchfield.getFieldSizeGUI()+1, 1);
+        pane.add(pointLabelp2, matchfield.getFieldSizeGUI()+2, 1);
+        p.getPlayers().get(1).setLabel(pointLabelp2);
+
         for (int i = 0; i < matchfield.getFieldSize()*matchfield.getFieldSize(); i++) {
             matchfield.getFieldList().get(i).setMatchfield(matchfield);
             matchfield.getFieldList().get(i).calculateLines();
@@ -171,6 +189,7 @@ public class GUI extends Application {
         for (int i = 0; i < buttonListHorizontal.size(); i++) {
             clickChangeColor(buttonField, buttonListHorizontal, i, p, matchfield, 1); //1: horizontal buttons
         }
+
         return scene;
     }
 
@@ -198,11 +217,23 @@ public class GUI extends Application {
                     if(matchfield.getFieldList().get(j).isCompleted()&&!matchfield.getFieldList().get(j).isState()){
                         buttonField.get(j).setStyle("-fx-background-color: " + newColor);
                         matchfield.getFieldList().get(j).setState(true);
+                        p.getCurrentPlayer().addPoints(PointsToAdd(j, matchfield));
                     }
                 }
                 p.nextPlayer();
             }
         });
+    }
+
+    private static int PointsToAdd(int fieldIndex, MatchfieldSettings matchfield){
+        String type = matchfield.getFieldList().get(fieldIndex).getType();
+
+        if(type.equals("bonus")){
+            return 3;
+        } else if (type.equals("minus")){
+            return -2;
+        }
+        return 1;
     }
 
 

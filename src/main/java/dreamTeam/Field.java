@@ -95,4 +95,8 @@ public class Field implements IField{
         logger.debug("LineBottom: " + (indexField+matchfield.getFieldSize()));
         return matchfield.getLineListHorizontal().get(indexField+ matchfield.getFieldSize());
     }
+
+    public String getType (){
+        return "normal";
+    }
 }
