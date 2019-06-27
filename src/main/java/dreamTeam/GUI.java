@@ -54,6 +54,7 @@ public class GUI extends Application {
         Scene scene = new Scene( bpane,500, 500);
 
         GridPane gpane = new GridPane();
+        gpane.setVgap(7.0);
 
         BorderPane topPane = new BorderPane();
         bpane.setTop(topPane);
@@ -211,6 +212,9 @@ public class GUI extends Application {
         pane.add(labelp2, matchfield.getFieldSizeGUI()+1, 1);
         pane.add(pointLabelp2, matchfield.getFieldSizeGUI()+2, 1);
         p.getPlayers().get(1).setLabel(pointLabelp2);
+
+        pane.setHgap(5.0);
+        pane.setVgap(5.0);
 
         for (int i = 0; i < matchfield.getFieldSize()*matchfield.getFieldSize(); i++) {
             matchfield.getFieldList().get(i).setMatchfield(matchfield);
