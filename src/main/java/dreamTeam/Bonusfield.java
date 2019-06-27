@@ -15,4 +15,8 @@ public class Bonusfield extends Field {
         super.generateField();
     }
 
+    @Override
+    public String getTypeField() {
+        return "+";
+    }
 }

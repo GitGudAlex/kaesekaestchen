@@ -16,5 +16,7 @@ public interface IField {
 
     String getType();
 
+    String getTypeField();
+
     void setMatchfield(MatchfieldSettings matchfield);
 }

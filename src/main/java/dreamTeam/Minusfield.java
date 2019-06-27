@@ -16,4 +16,8 @@ public class Minusfield extends Field{
         super.generateField();
     }
 
+    @Override
+    public String getTypeField() {
+        return "-";
+    }
 }

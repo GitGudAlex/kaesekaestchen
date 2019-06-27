@@ -99,4 +99,6 @@ public class Field implements IField{
     public String getType (){
         return "normal";
     }
+
+    public String getTypeField() {return "";}
 }

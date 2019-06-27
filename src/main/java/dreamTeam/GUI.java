@@ -1,10 +1,13 @@
 package dreamTeam;
 
 import javafx.application.Application;
+import javafx.collections.FXCollections;
 import javafx.css.Match;
 import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
@@ -24,9 +27,13 @@ public class GUI extends Application {
     @Override
     public void start(Stage primaryStage) {
 
+        Music.music("music/sound.wav");
+
         int start = 1; // 1=newGame 2=instructions
         MatchfieldSettings matchfield;
+        if (start == 3){
 
+        }
         if (start == 2) {
             showInstruction();
         }
@@ -36,7 +43,7 @@ public class GUI extends Application {
         } else {
             matchfield = new MatchfieldSettings(0, 0, false, false, false);
         }
-        primaryStage.setScene(playingScene(matchfield));
+        primaryStage.setScene(firstScene(primaryStage));//playingScene(matchfield));
         primaryStage.show();
 
 
@@ -58,7 +65,7 @@ public class GUI extends Application {
 
         playermanager.generatePlayer();*/
 
-        MatchfieldSettings matchfield = new MatchfieldSettings(3, 5, true, false, true);
+        MatchfieldSettings matchfield = new MatchfieldSettings(4, 5, true, true, true);
 
 //
 
@@ -77,7 +84,78 @@ public class GUI extends Application {
 
     }
 
-    private static void firstScene() {
+    private static Scene firstScene(Stage primaryStage) {
+
+        PlayerManager playerManager;
+        MatchfieldSettings matchfield;
+
+        BorderPane bpane = new BorderPane();
+
+        Scene scene = new Scene( bpane,300, 300);
+
+        GridPane gpane = new GridPane();
+
+        BorderPane topPane = new BorderPane();
+        bpane.setTop(topPane);
+        Label labelSettings = new Label("Settings:");
+        topPane.setCenter(labelSettings);
+
+        Button buttonNext = new Button(" next ");
+
+        BorderPane bottomPane = new BorderPane();
+        bpane.setBottom(bottomPane);
+        bottomPane.setCenter(buttonNext);
+
+        Label labelPlayer1 = new Label("Name: ");
+        Label labelPlayer2 = new Label("Name: ");
+        javafx.scene.control.TextField tfPlayer1 = new javafx.scene.control.TextField();
+        javafx.scene.control.TextField tfPlayer2 = new TextField();
+
+        bpane.setCenter(gpane);
+        gpane.add(labelPlayer1, 0, 0);
+        gpane.add(labelPlayer2, 0, 1);
+        gpane.setMaxHeight(100);
+        gpane.setMaxWidth(250);
+        gpane.add(tfPlayer1,1,0);
+        gpane.add(tfPlayer2, 1, 1);
+
+        Label labelFieldSize = new Label("Fieldsize: ");
+        ChoiceBox<Integer> choiceFieldSize = new ChoiceBox<>(FXCollections.observableArrayList(3,4,5,6,7,8,9,10));
+        choiceFieldSize.getSelectionModel().selectFirst();
+
+        gpane.add(labelFieldSize, 0,2);
+        gpane.add(choiceFieldSize, 1,2); // mögliche Exception, falls Text oder Kommazahl einegeben
+
+        Label labelMinus = new Label("Minusfield: ");
+        Label labelBonus = new Label("Bonusfield: ");
+        CheckBox checkMinus = new CheckBox();
+        CheckBox checkBonus = new CheckBox();
+
+        gpane.add(labelBonus, 0, 3);
+        gpane.add(labelMinus, 0, 4);
+        gpane.add(checkBonus, 1, 3);
+        gpane.add(checkMinus, 1, 4);
+
+        String [] names = {tfPlayer1.getText(), tfPlayer2.getText()};
+        Color[] colors = {Color.blue, Color.red};
+        playerManager = new PlayerManager(2, false, names, colors);
+
+        boolean bonusField = checkBonus.isSelected();
+        boolean minusField = checkMinus.isSelected();
+
+        int fieldSize = choiceFieldSize.getValue();
+
+        logger.debug("FieldSize Choice Box: "+fieldSize);
+
+        matchfield = new MatchfieldSettings(fieldSize, 1, bonusField, minusField, false);
+
+        buttonNext.setOnAction(actionEvent -> {
+            primaryStage.setScene(playingScene(matchfield, playerManager));
+            primaryStage.show();
+
+        });
+
+        return scene;
 
     }
 
@@ -89,14 +167,10 @@ public class GUI extends Application {
 
     }
 
-    private static Scene playingScene(MatchfieldSettings matchfield) {
+    private static Scene playingScene(MatchfieldSettings matchfield, PlayerManager p) {
             /*
             mock data
              */
-
-        String[] n = {"p1", "p2"};
-        Color[] c = {Color.blue, Color.red};
-        PlayerManager p = new PlayerManager(2, false, n, c);
 
         GridPane pane = new GridPane();
 
@@ -165,8 +239,8 @@ public class GUI extends Application {
         //create scoreboard
         Label labele = new Label();
         labele.setPrefSize(20,20);
-        Label labelp1 = new Label("Player 1: ");
-        Label labelp2 = new Label("Player 2: ");
+        Label labelp1 = new Label(p.getPlayers().get(0).getName());
+        Label labelp2 = new Label(p.getPlayers().get(1).getName());
         Label pointLabelp1 = new Label("0");
         Label pointLabelp2 = new Label("0");
         pane.add(labele, matchfield.getFieldSizeGUI(), 0);
@@ -180,6 +254,8 @@ public class GUI extends Application {
         for (int i = 0; i < matchfield.getFieldSize()*matchfield.getFieldSize(); i++) {
             matchfield.getFieldList().get(i).setMatchfield(matchfield);
             matchfield.getFieldList().get(i).calculateLines();
+            String s = matchfield.getFieldList().get(i).getTypeField();
+            buttonField.get(i).setText(s);
         }
 
         for (int i = 0; i < buttonList.size(); i++) {
