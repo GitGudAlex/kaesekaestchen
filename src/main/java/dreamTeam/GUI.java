@@ -29,50 +29,13 @@ public class GUI extends Application {
 
         Music.music("music/sound.wav");
 
-        int start = 1; // 1=newGame 2=instructions
-        MatchfieldSettings matchfield;
-        if (start == 3){
-
-        }
-        if (start == 2) {
-            showInstruction();
-        }
-        if (start == 1) {
-            matchfield = newGame();
-            logger.info("Neues Spiel wird gestartet.");
-        } else {
-            matchfield = new MatchfieldSettings(0, 0, false, false, false);
-        }
         primaryStage.setScene(firstScene(primaryStage));//playingScene(matchfield));
         primaryStage.show();
-
-
     }
 
 
-    private static MatchfieldSettings newGame() {
-        //ToDo if (AnzahlSpieler == 1) {aiPlayer = true;}
-
-        /*PlayerManager playermanager = new PlayerManager();
-        playermanager.setPlayers(4);
-
-
-        //ToDo Weiter-Button
-
-        //ToDo Namen einfügen
-
-        //ToDO Weiter-Button
-
-        playermanager.generatePlayer();*/
-
-        MatchfieldSettings matchfield = new MatchfieldSettings(4, 5, true, true, true);
-
-//
-
-        return matchfield;
-    }
-
-    ;
+    private static void newGame() {
+    };
 
     private static void showInstruction() {
         logger.info("show Instruction");
@@ -86,12 +49,9 @@ public class GUI extends Application {
 
     private static Scene firstScene(Stage primaryStage) {
 
-        PlayerManager playerManager;
-        MatchfieldSettings matchfield;
-
         BorderPane bpane = new BorderPane();
 
-        Scene scene = new Scene( bpane,300, 300);
+        Scene scene = new Scene( bpane,500, 500);
 
         GridPane gpane = new GridPane();
 
@@ -100,14 +60,14 @@ public class GUI extends Application {
         Label labelSettings = new Label("Settings:");
         topPane.setCenter(labelSettings);
 
-        Button buttonNext = new Button(" next ");
+        Button buttonNext = new Button("Start Game");
 
         BorderPane bottomPane = new BorderPane();
         bpane.setBottom(bottomPane);
         bottomPane.setCenter(buttonNext);
 
-        Label labelPlayer1 = new Label("Name: ");
-        Label labelPlayer2 = new Label("Name: ");
+        Label labelPlayer1 = new Label("Player 1: ");
+        Label labelPlayer2 = new Label("Player 2: ");
         javafx.scene.control.TextField tfPlayer1 = new javafx.scene.control.TextField();
         javafx.scene.control.TextField tfPlayer2 = new TextField();
 
@@ -136,20 +96,21 @@ public class GUI extends Application {
         gpane.add(checkBonus, 1, 3);
         gpane.add(checkMinus, 1, 4);
 
-        String [] names = {tfPlayer1.getText(), tfPlayer2.getText()};
-        Color[] colors = {Color.blue, Color.red};
-        playerManager = new PlayerManager(2, false, names, colors);
 
-        boolean bonusField = checkBonus.isSelected();
-        boolean minusField = checkMinus.isSelected();
-
-        int fieldSize = choiceFieldSize.getValue();
-
-        logger.debug("FieldSize Choice Box: "+fieldSize);
-
-        matchfield = new MatchfieldSettings(fieldSize, 1, bonusField, minusField, false);
 
         buttonNext.setOnAction(actionEvent -> {
+
+            String [] names = {tfPlayer1.getText() + ": ", tfPlayer2.getText() + ": "};
+            Color[] colors = {Color.blue, Color.red};
+            final PlayerManager playerManager = new PlayerManager(2, false, names, colors);
+
+            boolean bonusField = checkBonus.isSelected();
+            boolean minusField = checkMinus.isSelected();
+
+            int fieldSize = choiceFieldSize.getValue();
+
+            MatchfieldSettings matchfield = new MatchfieldSettings(fieldSize, 1, bonusField, minusField, false);
+
             primaryStage.setScene(playingScene(matchfield, playerManager));
             primaryStage.show();
 
@@ -174,9 +135,9 @@ public class GUI extends Application {
 
         GridPane pane = new GridPane();
 
-        Scene scene = new Scene(pane, 300, 300);
+        Scene scene = new Scene(pane, 500, 500);
 
-        pane.setMinSize(300, 300);
+        pane.setMinSize(500, 500);
 
         ArrayList<Button> buttonList = new ArrayList();
         ArrayList<Button> buttonListHorizontal = new ArrayList();
