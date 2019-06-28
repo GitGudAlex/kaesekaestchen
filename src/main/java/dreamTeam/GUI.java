@@ -27,7 +27,7 @@ public class GUI extends Application {
     @Override
     public void start(Stage primaryStage) {
 
-        Music.music("music/sound.wav");
+        Music.music("music/sound.wav", true);
 
         primaryStage.setScene(firstScene(primaryStage));//playingScene(matchfield));
         primaryStage.show();
@@ -144,7 +144,6 @@ public class GUI extends Application {
         ArrayList<Button> buttonListHorizontal = new ArrayList();
         ArrayList<Button> buttonField = new ArrayList<>();
 
-
         
         int indexHorizontal = 0;
         int indexVertical = 0;
@@ -230,6 +229,7 @@ public class GUI extends Application {
         for (int i = 0; i < buttonListHorizontal.size(); i++) {
             clickChangeColor(buttonField, buttonListHorizontal, i, p, matchfield, 1); //1: horizontal buttons
         }
+
 
         return scene;
     }

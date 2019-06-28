@@ -44,7 +44,8 @@ public class PlayerManager {
     }
 
     public ArrayList<Player> getPlayers() {
-        return playerList;
+        ArrayList playerListC = playerList;
+        return playerListC;
     }
 
     void setPlayers(int inputPlayers) {

@@ -24,18 +24,6 @@ public class MatchfieldSettings {
 
     private boolean fastMode;
 
-    public void setLineListHorizontal(ArrayList<Line> lineListHorizontal) {
-        this.lineListHorizontal = lineListHorizontal;
-    }
-
-    public void setLineListVertical(ArrayList<Line> lineListVertical) {
-        this.lineListVertical = lineListVertical;
-    }
-
-    public void setFieldList(ArrayList<IField> fieldList) {
-        this.fieldList = fieldList;
-    }
-
     private ArrayList<Line> lineListHorizontal = new ArrayList<>();
     private ArrayList<Line> lineListVertical = new ArrayList<>();
     private ArrayList<IField> fieldList = new ArrayList<>();
@@ -124,15 +112,18 @@ public class MatchfieldSettings {
     }
 
     public ArrayList<Line> getLineListHorizontal() {
-        return lineListHorizontal;
+        ArrayList lineListHorizontalC = lineListHorizontal;
+        return lineListHorizontalC;
     }
 
     public ArrayList<Line> getLineListVertical() {
-        return lineListVertical;
+        ArrayList lineListVerticalC = lineListVertical;
+        return lineListVerticalC;
     }
 
     public ArrayList<IField> getFieldList() {
-        return fieldList;
+        ArrayList fieldListC = fieldList;
+        return fieldListC;
     }
 
 }
