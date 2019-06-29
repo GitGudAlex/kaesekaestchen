@@ -266,7 +266,7 @@ public class GUI extends Application {
         });
     }
 
-    private static int PointsToAdd(int fieldIndex, MatchfieldSettings matchfield){
+    public static int PointsToAdd(int fieldIndex, MatchfieldSettings matchfield){
         String type = matchfield.getFieldList().get(fieldIndex).getType();
 
         if(type.equals("bonus")){

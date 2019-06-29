@@ -99,7 +99,7 @@ public class MatchfieldSettings {
         return indexLine - fieldSize;
     }
 
-    protected int checkFieldBottom (int indexLine){
+    public int checkFieldBottom (int indexLine){
         logger.debug("Check FieldBottom: " + indexLine);
         return indexLine;
     }
