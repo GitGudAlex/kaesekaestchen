@@ -7,16 +7,8 @@ import java.awt.*;
 
 public class PlayerTest {
 
-    Player playerOne = new Player("PlayerOne", Color.red);
-    Player playerTwo = new Player("PlayerTwo", Color.blue);
-
-    @Test
-    public void setLabel() {
-    }
-
-    @Test
-    public void addPoints() {
-    }
+    private Player playerOne = new Player("PlayerOne", Color.red);
+    private Player playerTwo = new Player("PlayerTwo", Color.blue);
 
     @Test
     public void getColor() {
@@ -25,6 +17,14 @@ public class PlayerTest {
         //false testing
         Assert.assertNotEquals(Color.blue, playerOne.getColor());
         Assert.assertNotEquals(Color.green, playerTwo.getColor());
+    }
+
+    @Test
+    public void getName(){
+        Assert.assertEquals("PlayerOne", playerOne.getName());
+        Assert.assertEquals("PlayerTwo", playerTwo.getName());
+        //false testing
+        Assert.assertNotEquals("PlayerThree", playerOne.getName());
     }
 
 }

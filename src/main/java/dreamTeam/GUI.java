@@ -107,7 +107,6 @@ public class GUI extends Application {
 
     }
 
-
     private static Scene playingScene(MatchfieldSettings matchfield, PlayerManager p) {
             /*
             mock data
@@ -151,8 +150,7 @@ public class GUI extends Application {
             l.setPrefSize(10, 10);
             if (i < matchfield.getFieldSizeGUI() - 1) {
                 for (int j = 0; j < matchfield.getFieldSizeGUI() - 1; j += 2) {
-                    buttonList.add(indexVertical, new Button());
-                    logger.debug("generate button vertical. Index: " + indexVertical);
+                    buttonLineVertical(buttonList, indexVertical);
                     buttonList.get(indexVertical).setPrefSize(20, 40);
                     pane.add(buttonList.get(indexVertical), j, i + 1);
                     matchfield.getLineListVertical().add(indexVertical, new Line (0));
@@ -166,8 +164,7 @@ public class GUI extends Application {
                     indexField++;
                     column = j;
                 }
-                buttonList.add(indexVertical, new Button());
-                logger.debug("generate button vertical. Index: " + indexVertical);
+                buttonLineVertical(buttonList, indexVertical);
                 buttonList.get(indexVertical).setPrefSize(20, 40);
                 pane.add(buttonList.get(indexVertical), column + 2, i + 1);
                 matchfield.getLineListVertical().add(indexVertical, new Line (0));
@@ -245,7 +242,7 @@ public class GUI extends Application {
         });
     }
 
-    public static int PointsToAdd(int fieldIndex, MatchfieldSettings matchfield){
+    private static int PointsToAdd(int fieldIndex, MatchfieldSettings matchfield){
         String type = matchfield.getFieldList().get(fieldIndex).getType();
 
         if(type.equals("bonus")){
@@ -254,6 +251,11 @@ public class GUI extends Application {
             return -2;
         }
         return 1;
+    }
+
+    private static void buttonLineVertical(ArrayList buttonList, int indexVertical){
+        buttonList.add(indexVertical, new Button());
+        logger.debug("generate button vertical. Index: " + indexVertical);
     }
 
 

@@ -8,8 +8,8 @@ import static org.junit.Assert.*;
 
 public class LineTest {
 
-    Line lineHorizontal = new Line(0);
-    Line lineVertical = new Line(1);
+    private Line lineHorizontal = new Line(0);
+    private Line lineVertical = new Line(1);
 
     @Before
     public void setStateLine(){

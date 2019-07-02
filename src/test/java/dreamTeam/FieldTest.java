@@ -6,9 +6,9 @@ import org.junit.Test;
 
 public class FieldTest {
 
-    IField fieldNormal = new Field(1);
-    IField fieldBonus = new Bonusfield(2);
-    IField fieldMinus = new Minusfield(3);
+    private IField fieldNormal = new Field(1);
+    private IField fieldBonus = new Bonusfield(2);
+    private IField fieldMinus = new Minusfield(3);
 
     @Before
     public void setStateField(){

@@ -25,12 +25,13 @@ class Player {
         this.label = label;
     }
 
+    public Label getLabel (){return label;}
+
     public void addPoints(int points){
         this.score += points;
         logger.debug("Player: "+ name + " Points: "+score);
         label.setText(Integer.toString(this.score));
-    };
-
+    }
 
     public Color getColor() {
         return color;

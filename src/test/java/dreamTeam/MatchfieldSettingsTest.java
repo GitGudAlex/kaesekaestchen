@@ -9,8 +9,8 @@ import static org.junit.Assert.*;
 public class MatchfieldSettingsTest {
 
 
-    MatchfieldSettings matchfield = new MatchfieldSettings(3,1, false, false, false);
-    MatchfieldSettings matchfield2 = new MatchfieldSettings(5,1, false, false, false);
+    private MatchfieldSettings matchfield = new MatchfieldSettings(3,1, false, false, false);
+    private MatchfieldSettings matchfield2 = new MatchfieldSettings(5,1, false, false, false);
 
     @Test
     public void generateMatchfield() {
