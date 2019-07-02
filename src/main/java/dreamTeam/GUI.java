@@ -33,20 +33,6 @@ public class GUI extends Application {
         primaryStage.show();
     }
 
-
-    private static void newGame() {
-    };
-
-    private static void showInstruction() {
-        logger.info("show Instruction");
-    }
-
-    ;
-
-    private static void startGame() {
-
-    }
-
     private static Scene firstScene(Stage primaryStage) {
 
         BorderPane bpane = new BorderPane();
@@ -121,13 +107,6 @@ public class GUI extends Application {
 
     }
 
-    private static void secondScene() {
-
-    }
-
-    private static void thirdScene() {
-
-    }
 
     private static Scene playingScene(MatchfieldSettings matchfield, PlayerManager p) {
             /*
@@ -162,7 +141,7 @@ public class GUI extends Application {
                 logger.debug("generate button horizontal. Index: " + indexHorizontal);
                 buttonListHorizontal.get(indexHorizontal).setPrefSize(40, 10);
                 pane.add(buttonListHorizontal.get(indexHorizontal), j + 1, i);
-                matchfield.getLineListHorizontal().add(indexHorizontal,new Line(j+1, i, 1));
+                matchfield.getLineListHorizontal().add(indexHorizontal,new Line(1));
                 logger.debug("generate line horizontal. Index: " + indexHorizontal);
                 indexHorizontal++;
                 column = j;
@@ -176,12 +155,12 @@ public class GUI extends Application {
                     logger.debug("generate button vertical. Index: " + indexVertical);
                     buttonList.get(indexVertical).setPrefSize(20, 40);
                     pane.add(buttonList.get(indexVertical), j, i + 1);
-                    matchfield.getLineListVertical().add(indexVertical, new Line (j,i+1,0));
+                    matchfield.getLineListVertical().add(indexVertical, new Line (0));
                     logger.debug("generate line vertical. Index: " + indexVertical);
                     buttonField.add(indexField, new Button());
                     buttonField.get(indexField).setPrefSize(40, 40);
                     pane.add(buttonField.get(indexField), j + 1, i + 1);
-                    matchfield.getFieldList().add(indexField, factory.generateField(j+1,i+1, indexField,matchfield.randomFieldType()));
+                    matchfield.getFieldList().add(indexField, factory.generateField(indexField,matchfield.randomFieldType()));
                     logger.debug("field index: "+indexField);
                     indexVertical++;
                     indexField++;
@@ -191,7 +170,7 @@ public class GUI extends Application {
                 logger.debug("generate button vertical. Index: " + indexVertical);
                 buttonList.get(indexVertical).setPrefSize(20, 40);
                 pane.add(buttonList.get(indexVertical), column + 2, i + 1);
-                matchfield.getLineListVertical().add(indexVertical, new Line (column+2,i+1,0));
+                matchfield.getLineListVertical().add(indexVertical, new Line (0));
                 logger.debug("generate line vertical. Index: " + indexVertical);
                 indexVertical++;
             }

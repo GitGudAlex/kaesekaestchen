@@ -48,15 +48,4 @@ public class PlayerManager {
         return playerListC;
     }
 
-    void setPlayers(int inputPlayers) {
-        this.players = inputPlayers;
-    }
-
-    public boolean isAiPlayerSet() {
-        return aiPlayerSet;
-    }
-
-    public void setAiPlayerSet(boolean aiPlayerSet) {
-        this.aiPlayerSet = aiPlayerSet;
-    }
 }

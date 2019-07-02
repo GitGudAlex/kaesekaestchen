@@ -25,14 +25,6 @@ class Player {
         this.label = label;
     }
 
-    public int getScore() {
-        return score;
-    }
-
-    public void setScore(int score) {
-        this.score = score;
-    }
-
     public void addPoints(int points){
         this.score += points;
         logger.debug("Player: "+ name + " Points: "+score);

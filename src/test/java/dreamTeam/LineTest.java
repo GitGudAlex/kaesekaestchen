@@ -1,0 +1,33 @@
+package dreamTeam;
+
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import static org.junit.Assert.*;
+
+public class LineTest {
+
+    Line lineHorizontal = new Line(0);
+    Line lineVertical = new Line(1);
+
+    @Before
+    public void setStateLine(){
+        lineHorizontal.setState(true);
+        lineVertical.setState(false);
+    }
+
+    @Test
+    public void getState() {
+        Assert.assertFalse(lineVertical.getState());
+        Assert.assertTrue(lineHorizontal.getState());
+    }
+
+    @Test
+    public void setState() {
+        lineVertical.setState(true);
+        lineHorizontal.setState(false);
+        Assert.assertTrue(lineVertical.getState());
+        Assert.assertFalse(lineHorizontal.getState());
+    }
+}

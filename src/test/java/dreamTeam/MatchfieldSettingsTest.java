@@ -48,10 +48,10 @@ public class MatchfieldSettingsTest {
     }
 
     @Test
-    public void checkFieldTop1() {
-    }
-
-    @Test
-    public void checkFieldBottom1() {
+    public void getFieldSize() {
+        Assert.assertEquals(3, matchfield.getFieldSize());
+        Assert.assertEquals(5, matchfield2.getFieldSize());
+        // false testing
+        Assert.assertNotEquals(4, matchfield.getFieldSize());
     }
 }

@@ -4,8 +4,6 @@ public interface IField {
 
     void checkCompleted ();
 
-    void generateField();
-
     boolean isState();
 
     boolean isCompleted();

@@ -9,13 +9,8 @@ public class Field implements IField{
 
     private static final Logger logger = LogManager.getLogger(App.class);
 
-    private int xCoord;
-    private int yCoord;
-
     private boolean state;
     private boolean completed;
-
-    private Color colorField = Color.gray;
 
     private MatchfieldSettings matchfield;
 
@@ -26,16 +21,10 @@ public class Field implements IField{
 
     private int indexField;
 
-    public Field(int xCoord, int yCoord, int indexField) {
-        this.xCoord = xCoord;
-        this.yCoord = yCoord;
+    public Field(int indexField) {
         this.indexField = indexField;
         this.state = false;
     }
-
-    public void generateField (){
-
-    };
 
     public void checkCompleted () {
         logger.debug("checkCompleted");
@@ -56,10 +45,6 @@ public class Field implements IField{
 
     public boolean isCompleted() {
         return completed;
-    }
-
-    public void setCompleted(boolean completed) {
-        this.completed = completed;
     }
 
     public void setMatchfield (MatchfieldSettings matchfielda){
