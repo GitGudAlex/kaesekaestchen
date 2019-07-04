@@ -24,6 +24,12 @@ public class GUI extends Application {
         launch(args);
     }
 
+    private boolean bonusfield;
+
+    private int fieldSize;
+
+    private static GUI gui = new GUI();
+
     @Override
     public void start(Stage primaryStage) {
 
@@ -36,28 +42,36 @@ public class GUI extends Application {
     private static Scene firstScene(Stage primaryStage) {
 
         BorderPane bpane = new BorderPane();
+        BorderPane topPane = new BorderPane();
+        BorderPane bottomPane = new BorderPane();
 
         Scene scene = new Scene( bpane,500, 500);
 
         GridPane gpane = new GridPane();
-        gpane.setVgap(7.0);
 
-        BorderPane topPane = new BorderPane();
-        bpane.setTop(topPane);
         Label labelSettings = new Label("Settings:");
-        topPane.setCenter(labelSettings);
+        Label labelPlayer1 = new Label("Player 1: ");
+        Label labelPlayer2 = new Label("Player 2: ");
+        Label labelFieldSize = new Label("Fieldsize: ");
+        Label labelMinus = new Label("Minusfield: ");
+        Label labelBonus = new Label("Bonusfield: ");
 
         Button buttonNext = new Button("Start Game");
 
-        BorderPane bottomPane = new BorderPane();
-        bpane.setBottom(bottomPane);
-        bottomPane.setCenter(buttonNext);
-
-        Label labelPlayer1 = new Label("Player 1: ");
-        Label labelPlayer2 = new Label("Player 2: ");
         javafx.scene.control.TextField tfPlayer1 = new javafx.scene.control.TextField();
-        javafx.scene.control.TextField tfPlayer2 = new TextField();
+        javafx.scene.control.TextField tfPlayer2 = new javafx.scene.control.TextField();
 
+        ChoiceBox<Integer> choiceFieldSize = new ChoiceBox<>(FXCollections.observableArrayList(3,4,5,6,7,8,9,10));
+
+        CheckBox checkMinus = new CheckBox();
+        CheckBox checkBonus = new CheckBox();
+
+        gpane.setVgap(7.0);
+        bpane.setTop(topPane);
+        bpane.setBottom(bottomPane);
+
+        topPane.setCenter(labelSettings);
+        bottomPane.setCenter(buttonNext);
         bpane.setCenter(gpane);
         gpane.add(labelPlayer1, 0, 0);
         gpane.add(labelPlayer2, 0, 1);
@@ -65,25 +79,13 @@ public class GUI extends Application {
         gpane.setMaxWidth(250);
         gpane.add(tfPlayer1,1,0);
         gpane.add(tfPlayer2, 1, 1);
-
-        Label labelFieldSize = new Label("Fieldsize: ");
-        ChoiceBox<Integer> choiceFieldSize = new ChoiceBox<>(FXCollections.observableArrayList(3,4,5,6,7,8,9,10));
         choiceFieldSize.getSelectionModel().selectFirst();
-
         gpane.add(labelFieldSize, 0,2);
         gpane.add(choiceFieldSize, 1,2); // mögliche Exception, falls Text oder Kommazahl einegeben
-
-        Label labelMinus = new Label("Minusfield: ");
-        Label labelBonus = new Label("Bonusfield: ");
-        CheckBox checkMinus = new CheckBox();
-        CheckBox checkBonus = new CheckBox();
-
         gpane.add(labelBonus, 0, 3);
         gpane.add(labelMinus, 0, 4);
         gpane.add(checkBonus, 1, 3);
         gpane.add(checkMinus, 1, 4);
-
-
 
         buttonNext.setOnAction(actionEvent -> {
 
@@ -91,12 +93,11 @@ public class GUI extends Application {
             Color[] colors = {Color.blue, Color.red};
             final PlayerManager playerManager = new PlayerManager(2, false, names, colors);
 
-            boolean bonusField = checkBonus.isSelected();
-            boolean minusField = checkMinus.isSelected();
+            gui.setBonusfield(checkBonus.isSelected());
+            gui.setBMinusfield(checkMinus.isSelected());
+            gui.setFieldSize(choiceFieldSize.getValue());
 
-            int fieldSize = choiceFieldSize.getValue();
-
-            MatchfieldSettings matchfield = new MatchfieldSettings(fieldSize, 1, bonusField, minusField, false);
+            MatchfieldSettings matchfield = new MatchfieldSettings(gui.getFieldSize(), 1, gui.getBonusfield(), gui.getMinusfield(), false);
 
             primaryStage.setScene(playingScene(matchfield, playerManager));
             primaryStage.show();
@@ -256,6 +257,30 @@ public class GUI extends Application {
     private static void buttonLineVertical(ArrayList buttonList, int indexVertical){
         buttonList.add(indexVertical, new Button());
         logger.debug("generate button vertical. Index: " + indexVertical);
+    }
+
+    public boolean getBonusfield (){
+        return bonusfield;
+    }
+
+    public void setBonusfield(boolean bonusfield){
+        this.bonusfield = bonusfield;
+    }
+
+    public boolean getMinusfield (){
+        return bonusfield;
+    }
+
+    public void setBMinusfield(boolean minusfield){
+        this.bonusfield = bonusfield;
+    }
+
+    public void setFieldSize (int fieldSize){
+        this.fieldSize = fieldSize;
+    }
+
+    public int getFieldSize (){
+        return fieldSize;
     }
 
 

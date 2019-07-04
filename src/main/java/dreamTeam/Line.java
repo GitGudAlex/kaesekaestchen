@@ -6,7 +6,7 @@ public class Line {
     //0=horizontal
     //1=vertikal
 
-    boolean state;
+    private boolean state;
 
     public Line(int ali) {
         this.ali = ali;

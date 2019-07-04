@@ -12,16 +12,10 @@ public class MatchfieldSettings {
 
     private int fieldSizeGUI;
     private int fieldSize;
-
-    public int getFieldSizeGUI() {
-        return fieldSizeGUI;
-    }
-
     private int fieldShape;
 
     private boolean bonusfield;
     private boolean minusfield;
-
     private boolean fastMode;
 
     private ArrayList<Line> lineListHorizontal = new ArrayList<>();
@@ -124,6 +118,10 @@ public class MatchfieldSettings {
     public ArrayList<IField> getFieldList() {
         ArrayList fieldListC = fieldList;
         return fieldListC;
+    }
+
+    public int getFieldSizeGUI() {
+        return fieldSizeGUI;
     }
 
 }

@@ -4,7 +4,7 @@ import java.awt.*;
 
 public class AIPlayer extends Player {
 
-    int difficulty;
+    private int difficulty;
 
     private AIPlayer(String name, Color color) {
         super (name, color);

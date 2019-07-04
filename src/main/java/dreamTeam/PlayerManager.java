@@ -11,10 +11,10 @@ public class PlayerManager {
     private static final Logger logger = LogManager.getLogger(App.class);
 
     private int players;
+    private int playerPlaying;
 
     private boolean aiPlayerSet;
 
-    private int playerPlaying;
     private ArrayList<Player> playerList = new ArrayList<Player>();
 
     public PlayerManager(int players, boolean aiPlayerSet, String[] playerName, Color[] playerColor) {
