@@ -1,5 +1,9 @@
 package dreamTeam;
 
+import dreamTeam.Matchfield.Bonusfield;
+import dreamTeam.Matchfield.Field;
+import dreamTeam.Matchfield.IField;
+import dreamTeam.Matchfield.Minusfield;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

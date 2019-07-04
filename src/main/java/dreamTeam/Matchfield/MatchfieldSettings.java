@@ -1,9 +1,11 @@
-package dreamTeam;
+package dreamTeam.Matchfield;
 
+import dreamTeam.App;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class MatchfieldSettings {
@@ -22,7 +24,7 @@ public class MatchfieldSettings {
     private ArrayList<Line> lineListVertical = new ArrayList<>();
     private ArrayList<IField> fieldList = new ArrayList<>();
 
-    MatchfieldSettings(int fieldSize, int fieldShape, boolean bonusfield, boolean minusfield, boolean fastMode) {
+    public MatchfieldSettings(int fieldSize, int fieldShape, boolean bonusfield, boolean minusfield, boolean fastMode) {
         this.fieldSizeGUI = (fieldSize *2)+1;
         this.fieldShape = fieldShape;
         this.bonusfield = bonusfield;
@@ -31,12 +33,11 @@ public class MatchfieldSettings {
         this.fieldSize = fieldSize;
     }
 
-
     public int getFieldSize() {
         return fieldSize;
     }
 
-    protected String randomFieldType (){
+    public String randomFieldType (){
         Random randomGenerator = new Random();
 
         int i = randomGenerator.nextInt(10); //i ist Zahl zwischen 0 und 9
@@ -88,7 +89,7 @@ public class MatchfieldSettings {
         return j;
     }
 
-    protected int checkFieldTop (int indexLine){
+    public int checkFieldTop (int indexLine){
         logger.debug("Check FieldTop: " + (indexLine-fieldSize));
         return indexLine - fieldSize;
     }
@@ -98,7 +99,7 @@ public class MatchfieldSettings {
         return indexLine;
     }
 
-    protected int checkFieldSide (int indexLine, int side){
+    public int checkFieldSide (int indexLine, int side){
         logger.debug("Check FieldSide " + side + ":");
         int row = (indexLine/(fieldSize+1))+1;
         logger.debug("Row: "+row);

@@ -1,6 +1,6 @@
-package dreamTeam;
+package dreamTeam.Matchfield;
 
-public class Minusfield extends Field{
+public class Minusfield extends Field {
 
     public Minusfield(int fieldIndex) {
         super(fieldIndex);
@@ -10,7 +10,6 @@ public class Minusfield extends Field{
     public String getType() {
         return "minus";
     }
-
 
     @Override
     public String getTypeField() {

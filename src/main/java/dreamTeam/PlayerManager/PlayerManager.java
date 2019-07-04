@@ -1,6 +1,7 @@
-package dreamTeam;
+package dreamTeam.PlayerManager;
 
 
+import dreamTeam.App;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -25,11 +26,6 @@ public class PlayerManager {
         }
         playerPlaying = 0;
     }
-
-    //Maximale Punktzahl
-    private void checkScore(){
-
-    };
 
     public void nextPlayer(){
 

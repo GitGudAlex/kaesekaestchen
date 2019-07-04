@@ -1,11 +1,12 @@
-package dreamTeam;
+package dreamTeam.PlayerManager;
 
+import dreamTeam.App;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import javafx.scene.control.Label;
 import java.awt.*;
 
-class Player {
+public class Player {
 
     private static final Logger logger = LogManager.getLogger(App.class);
 
@@ -15,7 +16,7 @@ class Player {
     private Label label;
 
 
-    Player(String name, Color color) {
+    public Player(String name, Color color) {
         score = 0;
         this.name = name;
         this.color = color;
@@ -24,8 +25,6 @@ class Player {
     public void setLabel (Label label){
         this.label = label;
     }
-
-    public Label getLabel (){return label;}
 
     public void addPoints(int points){
         this.score += points;

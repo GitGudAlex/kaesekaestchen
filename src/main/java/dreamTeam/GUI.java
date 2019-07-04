@@ -1,13 +1,16 @@
 package dreamTeam;
 
+import dreamTeam.Matchfield.FieldFactory;
+import dreamTeam.Matchfield.Line;
+import dreamTeam.Matchfield.MatchfieldSettings;
+import dreamTeam.PlayerManager.PlayerManager;
+import dreamTeam.Threads.Music;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
-import javafx.css.Match;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
@@ -23,12 +26,6 @@ public class GUI extends Application {
     public static void main(String[] args) {
         launch(args);
     }
-
-    private boolean bonusfield;
-
-    private int fieldSize;
-
-    private static GUI gui = new GUI();
 
     @Override
     public void start(Stage primaryStage) {
@@ -46,6 +43,8 @@ public class GUI extends Application {
         BorderPane bottomPane = new BorderPane();
 
         Scene scene = new Scene( bpane,500, 500);
+
+        logger.info(scene + ": GUI generated. ");
 
         GridPane gpane = new GridPane();
 
@@ -93,11 +92,15 @@ public class GUI extends Application {
             Color[] colors = {Color.blue, Color.red};
             final PlayerManager playerManager = new PlayerManager(2, false, names, colors);
 
-            gui.setBonusfield(checkBonus.isSelected());
-            gui.setBMinusfield(checkMinus.isSelected());
-            gui.setFieldSize(choiceFieldSize.getValue());
+            boolean bonusfield = checkBonus.isSelected();
+            boolean minusfield = checkMinus.isSelected();
+            int fieldSize = choiceFieldSize.getValue();
 
-            MatchfieldSettings matchfield = new MatchfieldSettings(gui.getFieldSize(), 1, gui.getBonusfield(), gui.getMinusfield(), false);
+            MatchfieldSettings matchfield = new MatchfieldSettings(fieldSize, 1, bonusfield, minusfield, false);
+
+            logger.info(matchfield + ": Matchfield generated.");
+            logger.debug(matchfield + " generatet with: \nFieldsize: "+fieldSize +" \nBonusfield: "
+                    + bonusfield + " \nMinusfield: "+minusfield);
 
             primaryStage.setScene(playingScene(matchfield, playerManager));
             primaryStage.show();
@@ -109,9 +112,6 @@ public class GUI extends Application {
     }
 
     private static Scene playingScene(MatchfieldSettings matchfield, PlayerManager p) {
-            /*
-            mock data
-             */
 
         GridPane pane = new GridPane();
 
@@ -137,10 +137,11 @@ public class GUI extends Application {
                 Label label = new Label();
                 pane.add(label, j, i);
                 label.setPrefSize(10, 10);
+                logger.debug("generate " + label + " , add Label on pane at " + j + ", "+i);
                 buttonListHorizontal.add(indexHorizontal, new Button());
-                logger.debug("generate button horizontal. Index: " + indexHorizontal);
                 buttonListHorizontal.get(indexHorizontal).setPrefSize(40, 10);
                 pane.add(buttonListHorizontal.get(indexHorizontal), j + 1, i);
+                logger.debug("generate button horizontal. Index: " + indexHorizontal+ ", add Button on pane at "+j+1+", "+i);
                 matchfield.getLineListHorizontal().add(indexHorizontal,new Line(1));
                 logger.debug("generate line horizontal. Index: " + indexHorizontal);
                 indexHorizontal++;
@@ -149,18 +150,21 @@ public class GUI extends Application {
             Label l = new Label();
             pane.add(l, column + 2, i);
             l.setPrefSize(10, 10);
+            logger.debug("generate "+ l + ", add Label on pane at "+ column+2+", "+i);
             if (i < matchfield.getFieldSizeGUI() - 1) {
                 for (int j = 0; j < matchfield.getFieldSizeGUI() - 1; j += 2) {
                     buttonLineVertical(buttonList, indexVertical);
                     buttonList.get(indexVertical).setPrefSize(20, 40);
                     pane.add(buttonList.get(indexVertical), j, i + 1);
+                    logger.debug("generate button vertical. Index: "+indexVertical +", add Button on pane at "+ j + ", "+i+1);
                     matchfield.getLineListVertical().add(indexVertical, new Line (0));
                     logger.debug("generate line vertical. Index: " + indexVertical);
                     buttonField.add(indexField, new Button());
                     buttonField.get(indexField).setPrefSize(40, 40);
                     pane.add(buttonField.get(indexField), j + 1, i + 1);
+                    logger.debug("generate button field. Index: "+indexField + ", add Button on pane at "+ j+1+", "+ i+1);
                     matchfield.getFieldList().add(indexField, factory.generateField(indexField,matchfield.randomFieldType()));
-                    logger.debug("field index: "+indexField);
+                    logger.debug("generate Field. Index: "+indexField);
                     indexVertical++;
                     indexField++;
                     column = j;
@@ -168,11 +172,14 @@ public class GUI extends Application {
                 buttonLineVertical(buttonList, indexVertical);
                 buttonList.get(indexVertical).setPrefSize(20, 40);
                 pane.add(buttonList.get(indexVertical), column + 2, i + 1);
+                logger.debug("generate button vertical. Index: "+indexVertical +", add Button on pane at "+ column+2 + ", "+i+1);
                 matchfield.getLineListVertical().add(indexVertical, new Line (0));
                 logger.debug("generate line vertical. Index: " + indexVertical);
                 indexVertical++;
             }
         }
+
+        logger.info(matchfield + " created");
 
         //create scoreboard
         Label labele = new Label();
@@ -191,6 +198,8 @@ public class GUI extends Application {
 
         pane.setHgap(5.0);
         pane.setVgap(5.0);
+
+        logger.info("scoreboard created");
 
         for (int i = 0; i < matchfield.getFieldSize()*matchfield.getFieldSize(); i++) {
             matchfield.getFieldList().get(i).setMatchfield(matchfield);
@@ -259,29 +268,6 @@ public class GUI extends Application {
         logger.debug("generate button vertical. Index: " + indexVertical);
     }
 
-    public boolean getBonusfield (){
-        return bonusfield;
-    }
-
-    public void setBonusfield(boolean bonusfield){
-        this.bonusfield = bonusfield;
-    }
-
-    public boolean getMinusfield (){
-        return bonusfield;
-    }
-
-    public void setBMinusfield(boolean minusfield){
-        this.bonusfield = bonusfield;
-    }
-
-    public void setFieldSize (int fieldSize){
-        this.fieldSize = fieldSize;
-    }
-
-    public int getFieldSize (){
-        return fieldSize;
-    }
 
 
 }

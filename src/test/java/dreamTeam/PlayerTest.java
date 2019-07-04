@@ -1,5 +1,6 @@
 package dreamTeam;
 
+import dreamTeam.PlayerManager.Player;
 import org.junit.Assert;
 import org.junit.Test;
 

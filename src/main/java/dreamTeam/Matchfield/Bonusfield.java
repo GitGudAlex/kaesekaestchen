@@ -1,4 +1,4 @@
-package dreamTeam;
+package dreamTeam.Matchfield;
 
 public class Bonusfield extends Field {
 

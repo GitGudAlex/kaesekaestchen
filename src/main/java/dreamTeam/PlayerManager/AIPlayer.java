@@ -1,4 +1,4 @@
-package dreamTeam;
+package dreamTeam.PlayerManager;
 
 import java.awt.*;
 

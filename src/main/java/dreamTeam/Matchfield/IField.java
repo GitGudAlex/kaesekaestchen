@@ -1,8 +1,8 @@
-package dreamTeam;
+package dreamTeam.Matchfield;
 
 public interface IField {
 
-    void checkCompleted ();
+    void checkCompleted();
 
     boolean isState();
 

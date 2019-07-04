@@ -1,8 +1,8 @@
-package dreamTeam;
+package dreamTeam.Matchfield;
 
 public class FieldFactory {
 
-    protected IField generateField (int fieldIndex, String type){
+    public IField generateField (int fieldIndex, String type){
 
         if(type.equals("bonus")){
             return new Bonusfield(fieldIndex);
