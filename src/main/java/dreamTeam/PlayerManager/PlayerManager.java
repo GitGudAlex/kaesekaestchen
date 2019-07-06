@@ -44,4 +44,20 @@ public class PlayerManager {
         return playerListC;
     }
 
+    public String WinnerText(){
+        if(WinnerName().equals("None"))
+            return "The Game is a draw";
+        else
+            return WinnerName() + "wins the game";
+    }
+
+    public String WinnerName(){
+        if(playerList.get(0).getScore() > playerList.get(1).getScore())
+            return playerList.get(0).getName();
+        else if(playerList.get(0).getScore() < playerList.get(1).getScore())
+            return playerList.get(1).getName();
+        else
+            return "None";
+    }
+
 }

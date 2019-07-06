@@ -32,6 +32,8 @@ public class Player {
         label.setText(Integer.toString(this.score));
     }
 
+    public int getScore(){return score;}
+
     public Color getColor() {
         return color;
     }

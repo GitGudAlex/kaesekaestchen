@@ -7,6 +7,7 @@ import org.apache.logging.log4j.Logger;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 public class MatchfieldSettings {
 
@@ -104,6 +105,12 @@ public class MatchfieldSettings {
         int row = (indexLine/(fieldSize+1))+1;
         logger.debug("Row: "+row);
         return indexLine-row+side;
+    }
+
+    public boolean checkGameFinished(){
+        List <IField> count = fieldList.stream().filter(IField -> IField.isState() == false).collect(Collectors.toList());
+        if(count.isEmpty()) return true;
+        else return false;
     }
 
     public ArrayList<Line> getLineListHorizontal() {

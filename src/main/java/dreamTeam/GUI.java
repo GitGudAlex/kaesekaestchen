@@ -16,12 +16,21 @@ import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 
 public class GUI extends Application {
 
     private static final Logger logger = LogManager.getLogger(App.class);
+
+    static Music testThread = new Music();
+    private static MatchfieldSettings matchfield;
+    private static PlayerManager playerManager;
+
+    private static  Stage window;
+
 
     public static void main(String[] args) {
         launch(args);
@@ -29,14 +38,21 @@ public class GUI extends Application {
 
     @Override
     public void start(Stage primaryStage) {
+        testThread.start();
+       // Music.music("music/sound.wav", true);
+        int i = 0;
 
-        Music.music("music/sound.wav", true);
+        window = primaryStage;
 
-        primaryStage.setScene(firstScene(primaryStage));//playingScene(matchfield));
-        primaryStage.show();
+        window.setScene(firstScene());
+        window.show();
+
+        //primaryStage.setScene(firstScene(primaryStage));//playingScene(matchfield));
+        //primaryStage.show();
     }
 
-    private static Scene firstScene(Stage primaryStage) {
+    private static Scene firstScene(/*Stage primaryStage*/) {
+
 
         BorderPane bpane = new BorderPane();
         BorderPane topPane = new BorderPane();
@@ -90,20 +106,23 @@ public class GUI extends Application {
 
             String [] names = {tfPlayer1.getText() + ": ", tfPlayer2.getText() + ": "};
             Color[] colors = {Color.blue, Color.red};
-            final PlayerManager playerManager = new PlayerManager(2, false, names, colors);
+            playerManager = new PlayerManager(2, false, names, colors);
 
             boolean bonusfield = checkBonus.isSelected();
             boolean minusfield = checkMinus.isSelected();
             int fieldSize = choiceFieldSize.getValue();
 
-            MatchfieldSettings matchfield = new MatchfieldSettings(fieldSize, 1, bonusfield, minusfield, false);
+            matchfield = new MatchfieldSettings(fieldSize, 1, bonusfield, minusfield, false);
 
             logger.info(matchfield + ": Matchfield generated.");
             logger.debug(matchfield + " generatet with: \nFieldsize: "+fieldSize +" \nBonusfield: "
                     + bonusfield + " \nMinusfield: "+minusfield);
 
-            primaryStage.setScene(playingScene(matchfield, playerManager));
-            primaryStage.show();
+            testThread.interrupt();
+            window.setScene(playingScene());
+            window.show();
+            //primaryStage.setScene(playingScene(matchfield, playerManager));
+           // primaryStage.show();
 
         });
 
@@ -111,7 +130,7 @@ public class GUI extends Application {
 
     }
 
-    private static Scene playingScene(MatchfieldSettings matchfield, PlayerManager p) {
+    private static Scene playingScene() {
 
         GridPane pane = new GridPane();
 
@@ -184,17 +203,17 @@ public class GUI extends Application {
         //create scoreboard
         Label labele = new Label();
         labele.setPrefSize(20,20);
-        Label labelp1 = new Label(p.getPlayers().get(0).getName());
-        Label labelp2 = new Label(p.getPlayers().get(1).getName());
+        Label labelp1 = new Label(playerManager.getPlayers().get(0).getName());
+        Label labelp2 = new Label(playerManager.getPlayers().get(1).getName());
         Label pointLabelp1 = new Label("0");
         Label pointLabelp2 = new Label("0");
         pane.add(labele, matchfield.getFieldSizeGUI(), 0);
         pane.add(labelp1, matchfield.getFieldSizeGUI()+1, 0);
         pane.add(pointLabelp1, matchfield.getFieldSizeGUI()+2, 0);
-        p.getPlayers().get(0).setLabel(pointLabelp1);
+        playerManager.getPlayers().get(0).setLabel(pointLabelp1);
         pane.add(labelp2, matchfield.getFieldSizeGUI()+1, 1);
         pane.add(pointLabelp2, matchfield.getFieldSizeGUI()+2, 1);
-        p.getPlayers().get(1).setLabel(pointLabelp2);
+        playerManager.getPlayers().get(1).setLabel(pointLabelp2);
 
         pane.setHgap(5.0);
         pane.setVgap(5.0);
@@ -209,22 +228,21 @@ public class GUI extends Application {
         }
 
         for (int i = 0; i < buttonList.size(); i++) {
-            clickChangeColor(buttonField, buttonList, i, p, matchfield, 0); //0: vertical buttons
-
+            clickChangeColor(buttonField, buttonList, i,0); //0: vertical buttons
         }
         for (int i = 0; i < buttonListHorizontal.size(); i++) {
-            clickChangeColor(buttonField, buttonListHorizontal, i, p, matchfield, 1); //1: horizontal buttons
+            clickChangeColor(buttonField, buttonListHorizontal, i,1); //1: horizontal buttons
         }
 
 
         return scene;
     }
 
-    private static void clickChangeColor(ArrayList<Button> buttonField, ArrayList<Button> buttonList, int indexLine, PlayerManager p, MatchfieldSettings matchfield, int ali) {
+    private static void clickChangeColor(ArrayList<Button> buttonField, ArrayList<Button> buttonList, int indexLine, int ali) {
         Button b = buttonList.get(indexLine);
         b.setOnAction(actionEvent -> {
             if (ali == 0 && !matchfield.getLineListVertical().get(indexLine).getState() || ali == 1 && !matchfield.getLineListHorizontal().get(indexLine).getState()) {
-                String newColor = "#" + Integer.toHexString(p.getCurrentPlayer().getColor().getRGB()).substring(2);
+                String newColor = "#" + Integer.toHexString(playerManager.getCurrentPlayer().getColor().getRGB()).substring(2);
                 logger.debug(newColor);
                 b.setStyle("-fx-background-color: " + newColor);
                 if (ali == 0) {
@@ -244,15 +262,17 @@ public class GUI extends Application {
                     if(matchfield.getFieldList().get(j).isCompleted()&&!matchfield.getFieldList().get(j).isState()){
                         buttonField.get(j).setStyle("-fx-background-color: " + newColor);
                         matchfield.getFieldList().get(j).setState(true);
-                        p.getCurrentPlayer().addPoints(PointsToAdd(j, matchfield));
+                        playerManager.getCurrentPlayer().addPoints(PointsToAdd(j));
                     }
                 }
-                p.nextPlayer();
+                playerManager.nextPlayer();
+                gameFinished();
             }
-        });
+        }
+        );
     }
 
-    private static int PointsToAdd(int fieldIndex, MatchfieldSettings matchfield){
+    private static int PointsToAdd(int fieldIndex){
         String type = matchfield.getFieldList().get(fieldIndex).getType();
 
         if(type.equals("bonus")){
@@ -268,6 +288,13 @@ public class GUI extends Application {
         logger.debug("generate button vertical. Index: " + indexVertical);
     }
 
+    private static void gameFinished(){
+        boolean state = matchfield.checkGameFinished();
+
+        if(state){
+            JOptionPane.showMessageDialog(null,"Game is over." + playerManager.WinnerText());
+        }
+    }
 
 
 }
