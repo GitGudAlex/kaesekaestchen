@@ -14,13 +14,14 @@ public class Music implements Runnable{
     private static final Logger logger = LogManager.getLogger(App.class);
 
    // public static synchronized void music (String track, boolean play){}
-        final String trackname = "music/sound.wav";
+        private final String trackname = "music/sound.wav";
 
-        Thread thread = null;
+        private Thread thread = null;
 
         public synchronized void start() {
         if(thread == null){
             thread = new Thread((this));
+            logger.info("Thread start");
             thread.start();
         }
         }
@@ -33,6 +34,7 @@ public class Music implements Runnable{
 
         public synchronized void interrupt(){
             if(thread != null){
+                logger.info("Thread interrupt");
                 thread.interrupt();
             }
         }
