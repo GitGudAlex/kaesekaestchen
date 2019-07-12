@@ -26,16 +26,15 @@ public class Field implements IField {
     }
 
     public void checkCompleted () {
-        logger.debug("checkCompleted");
         if (this.leftLine.getState()&&this.topLine.getState()&&this.rightLine.getState()&&this.bottomLine.getState()){
             this.completed = true;
         }
-        logger.debug("Field: " + indexField + " Completed: " + this.completed );
+        logger.debug("Check Field: " + indexField + " is completed: " + this.completed );
         
     }
 
     public void calculateLines (){
-        logger.debug("Field: " + indexField);
+        logger.debug("calculate Lines from Field: " + indexField);
         this.bottomLine=calculateLineBottom(this.indexField);
         this.leftLine=calculateLineSide(this.indexField, 0);
         this.rightLine=calculateLineSide(this.indexField, 1);
@@ -43,13 +42,9 @@ public class Field implements IField {
     }
 
     private Line calculateLineSide(int indexField, int side) { // left = 0, right = 1
-        //logger.debug("calculateLineSide");
         int rest = indexField% matchfield.getFieldSize();
-        //logger.debug("Remainder: " + rest);
         int n = indexField-rest;
-       // logger.debug("n: " + n);
         int factor = n/ matchfield.getFieldSize();
-        //logger.debug("Factor: " + factor);
         logger.debug("LineSide " + side + " : " +(n+(factor*1)+rest+side));
         return matchfield.getLineListVertical().get(n+(factor*1)+rest+side);
     }
@@ -65,10 +60,13 @@ public class Field implements IField {
     }
 
     public String getType (){
+        logger.debug("Fieldtype: normal");
         return "normal";
     }
 
-    public String getTypeField() {return "";}
+    public String getTypeField() {
+        logger.debug("Fieldtype: normal");
+        return "";}
 
     public void setState(boolean state) {
         this.state = state;

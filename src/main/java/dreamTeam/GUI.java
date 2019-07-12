@@ -115,7 +115,7 @@ public class GUI extends Application {
             matchfield = new MatchfieldSettings(fieldSize, 1, bonusfield, minusfield, false);
 
             logger.info(matchfield + ": Matchfield generated.");
-            logger.debug(matchfield + " generatet with: \nFieldsize: "+fieldSize +" \nBonusfield: "
+            logger.debug(matchfield + " generated with: \nFieldsize: "+fieldSize +" \nBonusfield: "
                     + bonusfield + " \nMinusfield: "+minusfield);
 
             testThread.interrupt();
@@ -220,6 +220,8 @@ public class GUI extends Application {
 
         logger.info("scoreboard created");
 
+        logger.info(scene + " GUI generated.");
+
         for (int i = 0; i < matchfield.getFieldSize()*matchfield.getFieldSize(); i++) {
             matchfield.getFieldList().get(i).setMatchfield(matchfield);
             matchfield.getFieldList().get(i).calculateLines();
@@ -241,9 +243,10 @@ public class GUI extends Application {
     private static void clickChangeColor(ArrayList<Button> buttonField, ArrayList<Button> buttonList, int indexLine, int ali) {
         Button b = buttonList.get(indexLine);
         b.setOnAction(actionEvent -> {
+            logger.debug(b+"Button clicked: set on Action.");
             if (ali == 0 && !matchfield.getLineListVertical().get(indexLine).getState() || ali == 1 && !matchfield.getLineListHorizontal().get(indexLine).getState()) {
                 String newColor = "#" + Integer.toHexString(playerManager.getCurrentPlayer().getColor().getRGB()).substring(2);
-                logger.debug(newColor);
+                logger.debug(b+"change color to: "+ newColor);
                 b.setStyle("-fx-background-color: " + newColor);
                 if (ali == 0) {
                     matchfield.getLineListVertical().get(indexLine).setState(true);
@@ -262,6 +265,7 @@ public class GUI extends Application {
                     if(matchfield.getFieldList().get(j).isCompleted()&&!matchfield.getFieldList().get(j).isState()){
                         buttonField.get(j).setStyle("-fx-background-color: " + newColor);
                         matchfield.getFieldList().get(j).setState(true);
+                        logger.debug(matchfield.getFieldList().get(j)+" Field is completed, change color to "+newColor);
                         playerManager.getCurrentPlayer().addPoints(PointsToAdd(j));
                     }
                 }
@@ -292,6 +296,7 @@ public class GUI extends Application {
         boolean state = matchfield.checkGameFinished();
 
         if(state){
+            logger.info("Game is over.");
             JOptionPane.showMessageDialog(null,"Game is over." + playerManager.WinnerText());
         }
     }

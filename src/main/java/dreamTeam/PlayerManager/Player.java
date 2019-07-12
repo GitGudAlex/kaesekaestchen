@@ -28,7 +28,7 @@ public class Player {
 
     public void addPoints(int points){
         this.score += points;
-        logger.debug("Player: "+ name + " Points: "+score);
+        logger.debug("Player: "+ name + " new score: "+score);
         label.setText(Integer.toString(this.score));
     }
 

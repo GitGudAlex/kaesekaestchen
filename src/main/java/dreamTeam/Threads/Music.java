@@ -1,11 +1,17 @@
 package dreamTeam.Threads;
 
+import dreamTeam.App;
+import dreamTeam.CustomExceptions.MusicSleepException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.io.File;
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
+import java.io.IOException;
+import javax.sound.sampled.*;
 
 public class Music implements Runnable{
+
+    private static final Logger logger = LogManager.getLogger(App.class);
 
    // public static synchronized void music (String track, boolean play){}
         final String trackname = "music/sound.wav";
@@ -42,9 +48,17 @@ public class Music implements Runnable{
                     clip.loop(clip.LOOP_CONTINUOUSLY);
 
                     Thread.sleep(clip.getMicrosecondLength() / 1);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    break;
+                } catch (LineUnavailableException l) {
+                    logger.error("Line Unavailable");
+                } catch (UnsupportedAudioFileException u){
+                    logger.error("Unsupported Audio File");
+                } catch (IOException i){
+                    logger.error("Input Stream");
+                } catch (InterruptedException e){
+                    logger.error("Thread sleep interrupted");
+                    throw new MusicSleepException("Thread sleep interrupted");
+
+
                 }
             }}
 

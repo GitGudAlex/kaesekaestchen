@@ -103,7 +103,6 @@ public class MatchfieldSettings {
     public int checkFieldSide (int indexLine, int side){
         logger.debug("Check FieldSide " + side + ":");
         int row = (indexLine/(fieldSize+1))+1;
-        logger.debug("Row: "+row);
         return indexLine-row+side;
     }
 
