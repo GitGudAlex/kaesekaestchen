@@ -16,8 +16,8 @@ public class PlayerTest {
         Assert.assertEquals(Color.red, playerOne.getColor());
         Assert.assertEquals(Color.blue, playerTwo.getColor());
         //false testing
-        Assert.assertNotEquals(Color.blue, playerOne.getColor());
-        Assert.assertNotEquals(Color.green, playerTwo.getColor());
+        Assert.assertNotEquals(1, playerOne.getColor());
+        Assert.assertNotEquals(false, playerTwo.getColor());
     }
 
     @Test

@@ -40,8 +40,8 @@ public class FieldTest {
         Assert.assertEquals("+", fieldBonus.getTypeField());
         Assert.assertEquals("-", fieldMinus.getTypeField());
         //false test
-        Assert.assertNotEquals("", fieldBonus.getTypeField());
-        Assert.assertNotEquals("", fieldMinus.getTypeField());
+        Assert.assertNotEquals(4, fieldBonus.getTypeField());
+        Assert.assertNotEquals(5, fieldMinus.getTypeField());
     }
 
     @Test
@@ -50,7 +50,7 @@ public class FieldTest {
         Assert.assertEquals("bonus", fieldBonus.getType());
         Assert.assertEquals("minus", fieldMinus.getType());
         // false test
-        Assert.assertNotEquals("bonus", fieldNormal.getType());
-        Assert.assertNotEquals("minus", fieldNormal.getType());
+        Assert.assertNotEquals(5, fieldNormal.getType());
+        Assert.assertNotEquals(true, fieldNormal.getType());
     }
 }
