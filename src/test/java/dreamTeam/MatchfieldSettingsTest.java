@@ -20,7 +20,7 @@ public class MatchfieldSettingsTest {
         Assert.assertEquals(5, matchfield2.checkFieldTop(10));
         Assert.assertEquals(10, matchfield2.checkFieldTop(15));
         //false testing
-        Assert.assertNotEquals(5, matchfield2.checkFieldTop(5));
+        Assert.assertNotEquals(true, matchfield2.checkFieldTop(5));
         Assert.assertNotEquals(10, matchfield.checkFieldTop(11));
     }
 
@@ -32,7 +32,7 @@ public class MatchfieldSettingsTest {
         Assert.assertEquals(5, matchfield2.checkFieldBottom(5));
         // false testing
         Assert.assertNotEquals(1, matchfield.checkFieldBottom(3));
-        Assert.assertNotEquals(5, matchfield.checkFieldBottom(1000));
+        Assert.assertNotEquals("A", matchfield.checkFieldBottom(1000));
     }
 
     @Test
@@ -41,7 +41,7 @@ public class MatchfieldSettingsTest {
         Assert.assertEquals(3, matchfield.checkFieldSide(3,1));
         Assert.assertEquals(8, matchfield2.checkFieldSide(10,0));
         //false testing
-        Assert.assertNotEquals(4, matchfield.checkFieldSide(20,0));
+        Assert.assertNotEquals(true, matchfield.checkFieldSide(20,0));
         Assert.assertNotEquals(8, matchfield2.checkFieldSide(-10, 1));
     }
 
