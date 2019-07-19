@@ -20,6 +20,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
+import java.util.Map;
 
 public class GUI extends Application {
 
@@ -31,6 +32,7 @@ public class GUI extends Application {
 
     private static  Stage window;
 
+    private static String highScoreList;
 
     public static void main(String[] args) {
         launch(args);
@@ -40,6 +42,8 @@ public class GUI extends Application {
     public void start(Stage primaryStage) {
         testThread.start();
        // Music.music("music/sound.wav", true);
+
+
         int i = 0;
 
         window = primaryStage;
@@ -104,9 +108,11 @@ public class GUI extends Application {
 
         buttonNext.setOnAction(actionEvent -> {
 
-            String [] names = {tfPlayer1.getText() + ": ", tfPlayer2.getText() + ": "};
+            String [] names = {tfPlayer1.getText() , tfPlayer2.getText()};
             Color[] colors = {Color.blue, Color.red};
             playerManager = new PlayerManager(2, false, names, colors);
+            highScoreList = playerManager.downloadHighScoreList();
+
 
             boolean bonusfield = checkBonus.isSelected();
             boolean minusfield = checkMinus.isSelected();
@@ -214,6 +220,8 @@ public class GUI extends Application {
         pane.add(labelp2, matchfield.getFieldSizeGUI()+1, 1);
         pane.add(pointLabelp2, matchfield.getFieldSizeGUI()+2, 1);
         playerManager.getPlayers().get(1).setLabel(pointLabelp2);
+        Button highScore = new Button("Highscore List");
+        pane.add(highScore, matchfield.getFieldSizeGUI()+1,2);
 
         pane.setHgap(5.0);
         pane.setVgap(5.0);
@@ -236,8 +244,16 @@ public class GUI extends Application {
             clickChangeColor(buttonField, buttonListHorizontal, i,1); //1: horizontal buttons
         }
 
+        highScore.setOnAction(actionEvent -> {
+            showHighScoreList();
+        });
 
         return scene;
+    }
+
+    private static void showHighScoreList(){
+
+        JOptionPane.showMessageDialog(null, highScoreList);
     }
 
     private static void clickChangeColor(ArrayList<Button> buttonField, ArrayList<Button> buttonList, int indexLine, int ali) {
@@ -299,6 +315,8 @@ public class GUI extends Application {
             logger.info("Game is over.");
             JOptionPane.showMessageDialog(null,"Game is over." + playerManager.WinnerText());
         }
+
+        playerManager.updateHighscoreList(playerManager.WinnerName(), playerManager.WinnerPoints());
     }
 
 

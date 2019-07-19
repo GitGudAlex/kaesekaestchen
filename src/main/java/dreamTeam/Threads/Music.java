@@ -20,7 +20,11 @@ public class Music implements Runnable{
 
         public synchronized void start() {
         if(thread == null){
+
+
             thread = new Thread((this));
+
+
             logger.info("Thread start");
             thread.start();
         }
@@ -40,29 +44,42 @@ public class Music implements Runnable{
         }
 
         public void run(){
-            while (thread!=null) {
+            while (thread!=null && !thread.isInterrupted()) {
 
                 try {
                     Clip clip = AudioSystem.getClip();
                     AudioInputStream inputstream = AudioSystem.getAudioInputStream(new File(trackname));
                     //stillPlaying(play);
                     clip.open(inputstream);
+
+                    logger.debug("Length of clip: " + clip.getMicrosecondLength());
+
                     clip.loop(clip.LOOP_CONTINUOUSLY);
 
+                    logger.debug("Threads state" + thread.toString());
+
+
+
+                    logger.debug("Mööp - Music");
+
+
                     Thread.sleep(clip.getMicrosecondLength() / 1);
+
                 } catch (LineUnavailableException l) {
                     logger.error("Line Unavailable");
                 } catch (UnsupportedAudioFileException u){
                     logger.error("Unsupported Audio File");
                 } catch (IOException i){
                     logger.error("Input Stream");
-                } catch (InterruptedException e){
+                }catch (InterruptedException e){
                     logger.error("Thread sleep interrupted");
                     throw new MusicSleepException("Thread sleep interrupted");
 
 
                 }
-            }}
+            }
+
+        }
 
 
 
