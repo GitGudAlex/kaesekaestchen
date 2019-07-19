@@ -18,21 +18,19 @@ import org.apache.logging.log4j.Logger;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.util.ArrayList;
-import java.util.Map;
 
 public class GUI extends Application {
 
     private static final Logger logger = LogManager.getLogger(App.class);
 
-    static Music testThread = new Music();
+    private static Music testThread = new Music();
     private static MatchfieldSettings matchfield;
     private static PlayerManager playerManager;
 
     private static  Stage window;
 
-    private static String highScoreList;
+    private static String highscoreList;
 
     public static void main(String[] args) {
         launch(args);
@@ -111,7 +109,7 @@ public class GUI extends Application {
             String [] names = {tfPlayer1.getText() , tfPlayer2.getText()};
             Color[] colors = {Color.blue, Color.red};
             playerManager = new PlayerManager(2, false, names, colors);
-            highScoreList = playerManager.downloadHighScoreList();
+            highscoreList = playerManager.downloadHighscoreList();
 
 
             boolean bonusfield = checkBonus.isSelected();
@@ -245,15 +243,15 @@ public class GUI extends Application {
         }
 
         highScore.setOnAction(actionEvent -> {
-            showHighScoreList();
+            showHighscoreList();
         });
 
         return scene;
     }
 
-    private static void showHighScoreList(){
+    private static void showHighscoreList(){
 
-        JOptionPane.showMessageDialog(null, highScoreList);
+        JOptionPane.showMessageDialog(null, highscoreList);
     }
 
     private static void clickChangeColor(ArrayList<Button> buttonField, ArrayList<Button> buttonList, int indexLine, int ali) {
@@ -313,11 +311,13 @@ public class GUI extends Application {
 
         if(state){
             logger.info("Game is over.");
-            JOptionPane.showMessageDialog(null,"Game is over." + playerManager.WinnerText());
+            JOptionPane.showMessageDialog(null,"Game is over." + playerManager.WinnerName()+" wins the game");
+            playerManager.updateHighscoreList(playerManager.WinnerName(), playerManager.WinnerPoints());
         }
 
-        playerManager.updateHighscoreList(playerManager.WinnerName(), playerManager.WinnerPoints());
+
     }
+
 
 
 }
@@ -325,6 +325,5 @@ public class GUI extends Application {
 
 
 
-    //ToDo überprüfe ob Rand oder Mittellinie
 
 

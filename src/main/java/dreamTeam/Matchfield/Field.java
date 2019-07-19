@@ -11,6 +11,8 @@ public class Field implements IField {
     private boolean state;
     private boolean completed;
 
+    private int indexField;
+
     private MatchfieldSettings matchfield;
 
     private Line leftLine;
@@ -18,7 +20,7 @@ public class Field implements IField {
     private Line rightLine;
     private Line bottomLine;
 
-    private int indexField;
+
 
     public Field(int indexField) {
         this.indexField = indexField;

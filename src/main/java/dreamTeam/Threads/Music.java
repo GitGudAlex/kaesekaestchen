@@ -30,11 +30,6 @@ public class Music implements Runnable{
         }
         }
 
-       public synchronized void stop(){
-            if(thread != null){
-                thread = null;
-            }
-        }
 
         public synchronized void interrupt(){
             if(thread != null){
@@ -81,32 +76,6 @@ public class Music implements Runnable{
 
         }
 
-
-
-        /*new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Clip clip = AudioSystem.getClip();
-                    AudioInputStream inputstream = AudioSystem.getAudioInputStream(new File(trackname));
-                    stillPlaying(play);
-                    clip.open(inputstream);
-                    clip.loop(clip.LOOP_CONTINUOUSLY);
-
-                    Thread.sleep(clip.getMicrosecondLength()/1);
-                }catch (Exception e){
-                    e.printStackTrace();
-                }
-
-            }
-        }).start();*/
-
-
-    private static void stillPlaying(boolean play){
-      if(!play){
-
-      }
-    };
 
 
 }

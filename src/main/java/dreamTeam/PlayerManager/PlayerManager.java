@@ -55,12 +55,6 @@ public class PlayerManager {
         return playerListC;
     }
 
-    public String WinnerText(){
-        if(WinnerName().equals("None"))
-            return "The Game is a draw";
-        else
-            return WinnerName() + "wins the game";
-    }
 
     public String WinnerName(){
         if(playerList.get(0).getScore() > playerList.get(1).getScore())
@@ -93,6 +87,10 @@ public class PlayerManager {
 
 
         highScoreList.entrySet()
+                .stream()
+                .sorted(Collections.reverseOrder(Map.Entry.comparingByKey()));
+
+        highScoreList.entrySet()
              .removeIf(score -> score.getKey().compareTo(Integer.valueOf(5))<0);
 
         keys = new int[highScoreList.size()];
@@ -107,7 +105,7 @@ public class PlayerManager {
         }
         try{
             PrintWriter pw = new PrintWriter(highScoreFile);
-            for (int i = 0; i < highScoreList.size() ; i++) {
+            for (int i = highScoreList.size()-1; i >= 0 ; i--) {
                 pw.println(keys[i]+ ":" +values[i]);
                 logger.debug("Write to file: " +keys[i]+":"+values[i]);
             }
@@ -118,7 +116,7 @@ public class PlayerManager {
     }
 
 
-    public String downloadHighScoreList(){
+    public String downloadHighscoreList(){
         String line;
         String highscoreListeString="";
         logger.info("Start downloading Highscore-List");
@@ -145,10 +143,4 @@ public class PlayerManager {
         return highscoreListeString;
     }
 
-    public Map getHighscorList(){
-        highScoreList.entrySet()
-                .stream()
-                .sorted(Collections.reverseOrder(Map.Entry.comparingByKey()));
-        return highScoreList;
-    }
 }
